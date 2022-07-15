@@ -1,0 +1,29 @@
+[
+  {
+    "jid": "6285876275834@s.whatsapp.net",
+    "db": [
+      {
+        "nama": "#menu",
+        "count": 2
+      }
+    ]
+  },
+  {
+    "jid": "6285335877178@s.whatsapp.net",
+    "db": [
+      {
+        "nama": "#menu",
+        "count": 1
+      }
+    ]
+  },
+  {
+    "jid": "6287713228635@s.whatsapp.net",
+    "db": [
+      {
+        "nama": "#tiktok",
+        "count": 3
+      }
+    ]
+  }
+]
