@@ -1823,11 +1823,11 @@ case prefix+'autodl': case prefix+'autodownload': {
 if (!isCreator) return reply(mess.owner)
 if (args.length < 1) return m.reply('ketik on untuk mengaktifkan\nketik off untuk menonaktifkan')
 if (args[0] === "on") {
-if (db.data.settings[botNumber].autodl) return m.reply(`*Auto Download already ON.*`)
+if (db.data.chats[m.chat].autodl) return m.reply(`*Auto Download already ON.*`)
  db.data.chats[m.chat].autodl = true
 m.reply('*Auto Download successfully turned ON.*')
 } else if (args[0] === "off") {
-if (!db.data.settings[botNumber].autodl) return m.reply(`*Auto Download already OFF.*`)
+if (!db.data.chats[m.chat].autodl) return m.reply(`*Auto Download already OFF.*`)
  db.data.chats[m.chat].autodl = false
 m.reply('*Auto Download successfully turned OFF.*')
 } else {
@@ -2561,13 +2561,13 @@ if (!m.isGroup) return m.reply(mess.group)
 if (!isAdmins && !isCreator) return m.reply(mess.admin)
 if (args.length < 1) return m.reply('ketik on untuk mengaktifkan\nketik off untuk menonaktifkan')
                 if (args[0] === 'on'){
-if (db.data.chats[m.chat].autostiker) return m.reply(`Sudah Aktif Sebelumnya`)
+if (db.data.chats[m.chat].autostiker) return m.reply(`*Auto Sticker already ON.*`)
  db.data.chats[m.chat].autostiker = true
-					m.reply('*Autosticker Aktif*')
+					m.reply('*Auto Sticker successfully turned ON.*')
                 } else if (args[0] === 'off'){
-if (!db.data.chats[m.chat].autostiker) return m.reply(`Sudah Tidak Aktif Sebelumnya`)
+if (!db.data.chats[m.chat].autostiker) return m.reply(`*Auto Sticker already OFF.*`)
 db.data.chats[m.chat].autostiker = false
-                    m.reply('*Autosticker Nonaktif*')
+                    m.reply('*Auto Sticker successfully turned OFF.*')
                 } 
             break
 case prefix+'gktau': case prefix+'bugkon':{
@@ -2580,11 +2580,11 @@ case prefix+'bugpc': {
 if (isBan) return reply(mess.ban)
 if (!isCreator) return reply(mess.owner)
 if (args.length < 1) return m.reply(`*Syntax Error!*\n\nUse : ${command} number|amount spam|timer\nExample : ${command} 62888|1|10s\n\n\ns = Second/Detik`)
-num = q.split('|')[0]
+num = q.split('|')[0]+'@s.whatsapp.net'
 jumlah = q.split('|')[1]
 waktu = q.split('|')[2]
 for (let i = 0; i < jumlah; i++) {
-rzki.sendMessage(num + '@s.whatsapp.net', {text:"ted"}, {quoted:lep})
+rzki.sendMessage(num, {text:"ted"}, {quoted:lep})
 await sleep(ms(waktu))
 }
 tek = `Success Send Bug To: ${num}\nAmount Spam: ${jumlah}\nTimer: ${waktu}`
@@ -6990,7 +6990,7 @@ reply(String(err))
 }
 
 if (budy.startsWith('$')) {
-if (!isCreator) return //m.reply(mess.owner)
+if (!isCreator) return m.reply(mess.owner)
 exec(budy.slice(2), (err, stdout) => {
 if(err) return fakey(String(err)) 
 if (stdout) return fakey(stdout)
