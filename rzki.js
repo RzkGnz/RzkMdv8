@@ -2556,7 +2556,7 @@ case prefix+'runtime2':
 faketroli(`_*Runtime :*_ ${runtime(process.uptime())}\n_*Runtime Os :*_ ${runtime(os.uptime())}`)
   break
 case prefix+'runtime':
-reply(`Running : [ ${runtime2(process.uptime())} ]`)
+reply(`*Running For : [ ${runtime2(process.uptime())} ]*`)
 break
 case prefix+'autosticker':
 case prefix+'autostiker':
