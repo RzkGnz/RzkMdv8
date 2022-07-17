@@ -4634,18 +4634,18 @@ if (!m.isGroup) return m.reply(mess.group)
 if (!isAdmins && !isCreator) return m.reply(mess.admin)
 if (args.length < 1) return m.reply('ketik on untuk mengaktifkan\nketik off untuk menonaktifkan')
 if (args[0] === "on") {
-if (welcm) return m.reply('Sudah Aktif')
+if (welcm) return m.reply('*Welcome already ON.*')
 wlcm.push(from)
 /* if (db.data.chats[m.chat].welcome) return m.reply(`Sudah Aktif Sebelumnya`)
  db.data.chats[m.chat].welcome = true*/
-m.reply('Succes menyalakan welcome di group ini')
+m.reply('*Welcome successfully turned ON.*')
 } else if (args[0] === "off") {
-if (!welcm) return m.reply('Sudah Mati')
+if (!welcm) return m.reply('*Welcome already OFF.*')
 let off = wlcm.indexOf(from)
 wlcm.splice(off, 1)
 /* if (!db.data.chats[m.chat].welcome) return m.reply(`Sudah Mati`)
  db.data.chats[m.chat].welcome = false*/
-m.reply('Succes mematikan welcome di group ini')
+m.reply('*Welcome successfully turned OFF.*')
 } else {
 m.reply('on untuk mengaktifkan, off untuk menonaktifkan')
 }
@@ -4657,18 +4657,18 @@ if (!m.isGroup) return m.reply(mess.group)
 if (!isAdmins && !isCreator) return m.reply(mess.admin)
 if (args.length < 1) return m.reply('ketik on untuk mengaktifkan\nketik off untuk menonaktifkan')
 if (args[0] === "on") {
-if (leftt) return m.reply('Sudah Aktif')
+if (leftt) return m.reply('*Left already ON.*')
 left.push(from)
 /* if (db.data.chats[m.chat].welcome) return m.reply(`Sudah Aktif Sebelumnya`)
  db.data.chats[m.chat].welcome = true*/
-m.reply('Succes menyalakan welcome di group ini')
+m.reply('*Left successfully turned ON.*')
 } else if (args[0] === "off") {
-if (!leftt) return m.reply('Sudah Mati')
+if (!leftt) return m.reply('*Left already OFF.*')
 let off = left.indexOf(from)
 left.splice(off, 1)
 /* if (!db.data.chats[m.chat].welcome) return m.reply(`Sudah Mati`)
  db.data.chats[m.chat].welcome = false*/
-m.reply('Succes mematikan welcome di group ini')
+m.reply('*Left successfully turned OFF.*')
 } else {
 m.reply('on untuk mengaktifkan, off untuk menonaktifkan')
 }
