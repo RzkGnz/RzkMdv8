@@ -24,6 +24,7 @@ const toHur = require('@develoka/angka-terbilang-js')
 const mathjs = require('mathjs')
 const ms = require('parse-ms')
 const toMs = require('ms')
+const fetch = require('node-fetch')
 const { performance } = require('perf_hooks')
 const { Primbon } = require('scrape-primbon')
 const { EmojiAPI } = require("emoji-api")
@@ -31,7 +32,7 @@ const { color } = require('./lib/color')
 const imgbbUploader = require('imgbb-uploader')
 const primbon = new Primbon()
 const emoji = new EmojiAPI()
-const { smsg, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, format, parseMention, getRandom, generateProfilePicture, reSize } = require('./lib/myfunc')
+const { smsg, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, format, parseMention, getRandom, generateProfilePicture, reSize, runtime2 } = require('./lib/myfunc')
 const { aiovideodl } = require('./lib/scraper.js')
 const scraper = require('./lib/scrape')
 const textpro = require('./lib/textpro')
@@ -2551,9 +2552,12 @@ reply(`*INFO BANDWIDTH*
  ▸ Upload : ${cBandwidth.upload}
  ▸ Download : ${cBandwidth.download}`)
 break
-case prefix+'runtime':
+case prefix+'runtime2':
 faketroli(`_*Runtime :*_ ${runtime(process.uptime())}\n_*Runtime Os :*_ ${runtime(os.uptime())}`)
   break
+case prefix+'runtime':
+reply(`Running : [ ${runtime2(process.uptime())} ]`)
+break
 case prefix+'autosticker':
 case prefix+'autostiker':
 if (isBan) return m.reply(mess.ban)
