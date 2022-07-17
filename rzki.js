@@ -743,10 +743,10 @@ rzki.sendMessage(from, buttonMessage, {quoted:m})
           
           reply(`*➠ auto download file sedang dikirim...*`)
 			    scraper.instagram(url).then( data => {
-			     for (let i of data.media) {
-				  if (i.extension === "mp4") {
+			     for (let i of data.medias) {
+				  if (i.fileType === "mp4") {
 				   rzki.sendMessage(from, { video: { url: i.url }},{quoted: m})
-				  } else if (i.extension === "jpg") {
+				  } else if (i.fileType === "jpg") {
 				   rzki.sendMessage(from, { image: { url: i.url }},{quoted: m})
 			      }
 			     }
@@ -1427,9 +1427,9 @@ id: '.dashboard'
     let examply = `*Example* : gunakan ${prefix + command.slice(1)} sekalian reply pesan bot`
     let examplyme = `Kirim Media lalu reply dengan ${prefix + command.slice(1)}`
     
-    if (budy.startsWith(`${prefix}menu`)) {
+   /* if (budy.startsWith(`${prefix}menu`)) {
 rzki.sendMessage(from, { react: { text: `🇮🇩`, key: m.key }})
-}
+}*/
     
     let footermenu = `Tambahkan -help setelah command untuk melihat Info command tersebut Example : .play -help
 
@@ -1524,6 +1524,7 @@ switch(command) {
 case prefix+'menu': case prefix+'help': {
 addCountCmd('#menu', sender, _cmd)
 if (isBan) return m.reply(mess.ban)
+rzki.sendMessage(from, { react: { text: `🇮🇩`, key: m.key }})
 let btn = [{
 urlButton: {
 displayText: 'Join My Support',
@@ -6311,10 +6312,10 @@ case prefix+'igdl': case prefix+'instagram': case prefix+'ig':
 			    if (!args2[1].includes('instagram.com')) return reply('Link Invalid')
 			    reply(mess.wait)
 			    scraper.instagram(args2[1]).then( data => {
-			     for (let i of data.media) {
-				  if (i.extension === "mp4") {
+			     for (let i of data.medias) {
+				  if (i.fileType === "mp4") {
 				   rzki.sendMessage(from, { video: { url: i.url }},{quoted: m})
-				  } else if (i.extension === "jpg") {
+				  } else if (i.fileType === "jpg") {
 				   rzki.sendMessage(from, { image: { url: i.url }},{quoted: m})
 			      }
 			     }
