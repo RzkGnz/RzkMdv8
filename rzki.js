@@ -80,6 +80,8 @@ mutechat = true
 mutegrup = false
 publicc = false
 selff = false
+buttlink = `https://chat.whatsapp.com/FsVimS75fllCD5JpyjC1Xb`
+buttdisp = `LINK GROUP`
 
 // Read Database
 /*global.db.data = JSON.parse(fs.readFileSync('./src/database.json'))
@@ -1633,7 +1635,7 @@ case prefix+'premium': case prefix+'infopremium':{
 reply(mess.premN)
 }
 break
-    case prefix+'dashboard': case prefix+'dash':
+    case prefix+'dashboard2': case prefix+'dash2':{
 	                    addCountCmd('#dashboard', sender, _cmd)
                             var posi = await getPosiCmdUser(m.sender, _cmdUser)
                             _cmdUser[posi].db.sort((a, b) => (a.count < b.count) ? 1 : -1)
@@ -1661,6 +1663,37 @@ break
                               teks += `• ${_cmdUser[posi].db[i].nama} : ${_cmdUser[posi].db[i].count}\n`
                             }
                             faketroli(teks)
+                            }
+                            break
+case prefix+'dashboard': case prefix+'dash': case prefix+'hitstat':{
+	                    addCountCmd('#dashboard', sender, _cmd)
+                            var posi = await getPosiCmdUser(m.sender, _cmdUser)
+                            _cmdUser[posi].db.sort((a, b) => (a.count < b.count) ? 1 : -1)
+                            _cmd.sort((a, b) => (a.count  < b.count) ? 1 : -1)
+                            var posi = await getPosiCmdUser(m.sender, _cmdUser)
+                            var jumlahCmd = _cmd.length
+                            if (jumlahCmd > 10) jumlahCmd = 10
+                            var jumlah = _cmdUser[posi].db.length
+                            if (jumlah > 5) jumlah = 5
+                            var totalUser = 0
+                            for (let x of _cmdUser[posi].db) {
+                              totalUser = totalUser + x.count
+                            }
+                            var total = 0
+                            for (let o of _cmd) {
+                              total = total + o.count
+                            }
+                            var teks = `❏  *H I T S T A T*\n\n*“The total is ${total}hits.”*\n\n`
+                            teks += `*Most Command Global*\n`
+                            for (let u = 0; u < jumlahCmd; u ++) {
+                              teks += `${u + 1}. *Command* : ```${_cmd[u].nama}```\n*Hit* : ${_cmd[u].count}\n`
+                            }
+                            /*teks += `\n*Most Command User*\n`
+                            for (let i = 0; i < jumlah; i ++) {
+                              teks += `• ${_cmdUser[posi].db[i].nama} : ${_cmdUser[posi].db[i].count}\n`*/
+                            }
+                            faketroli(teks)
+                            }
                             break
 case prefix+'setmenu':
 if (!isCreator) return m.reply(mess.owner)
@@ -5411,10 +5444,20 @@ quoted.copyNForward(i, true, {quoted:ftrolli})
 m.reply(`Sukses Mengirim Broadcast Ke ${anu.length} Group`)
 }
 break
+case prefix+'setbutbc':{
+inilogo4 = args.join(" ")
+inilogo9 = args.join(" ")
+var logo4 = inilogo4.split('|')[0]
+var logo9 = inilogo9.split('|')[1]
+buttlink = logo4
+buttdisp = logo9
+reply('*Button Bc succesfully set!*')
+}
+break
 case prefix+'bcm': case prefix+'bcmedia':{
 if (isBan) return m.reply(mess.ban)
 if (!isCreator) return m.reply(mess.owner)
-if (!m.quoted) return m.reply(`*Reply Media Dengan Kunci ${command}bc video|teks*`)
+if (!m.quoted) return m.reply(`*Reply Media Dengan Kunci ${command}bc video|teks\n\nList:\n\n1. video\n2. image\n3. butvd*`)
 let getGroups = await rzki.groupFetchAllParticipating()
 let groups = Object.entries(getGroups).slice(0).map(entry => entry[1])
 let anu = groups.map(v => v.id)
@@ -5431,6 +5474,9 @@ if (logo4 == `video`) {
 rzki.sendMessage(i, {caption:txt, video:media})
 } else if (logo4 == `image`) {
 rzki.sendMessage(i, {caption:txt, image:media})
+} else if (logo4 == `butvd`) {
+var buttons = [{ urlButton: { displayText: buttdisp, url : buttlink } },]
+				rzki.sendMessage(from, { caption: txt, video:media, templateButtons: buttons, footer: '‎', mentions: [sender]} )
 }
 //quoted.copyNForward(i, true)
 }
@@ -5440,12 +5486,26 @@ break
 case prefix+'bcallm': case prefix+'bcallmedia':{
 if (isBan) return m.reply(mess.ban)
 if (!isCreator) return m.reply(mess.owner)
-if (!m.quoted) return m.reply("Reply pesan yang ingin di broadcast!")
+if (!m.quoted) return m.reply(`*Reply Media Dengan Kunci ${command}bc video|teks\n\nList:\n\n1. video\n2. image\n3. butvd*`)
 let anu = await store.chats.all().map(v => v.id)
+let media = await quoted.download()
+inilogo4 = args.join(" ")
+inilogo9 = args.join(" ")
+var logo4 = inilogo4.split('|')[0]
+var logo9 = inilogo9.split('|')[1]
 m.reply(`Mengirim Broadcast Ke ${anu.length} Group Chat, Waktu Selesai ${anu.length * 2.5} detik`)
 for (let i of anu) {
 await sleep(2500)
-quoted.copyNForward(i, true)
+let txt = `❏  *B R O A D C A S T*\n\n${logo9}\n`
+if (logo4 == `video`) {
+rzki.sendMessage(i, {caption:txt, video:media})
+} else if (logo4 == `image`) {
+rzki.sendMessage(i, {caption:txt, image:media})
+} else if (logo4 == `butvd`) {
+var buttons = [{ urlButton: { displayText: buttdisp, url : buttlink } },]
+				rzki.sendMessage(from, { caption: txt, video:media, templateButtons: buttons, footer: '‎', mentions: [sender]} )
+}
+//quoted.copyNForward(i, true)
 }
 m.reply(`Sukses Mengirim Broadcast Ke ${anu.length} Group`)
 }
@@ -6116,8 +6176,8 @@ break
 rzki.sendContact(m.chat, global.owner2, m)
 }
 break*/
-case 'owner':
-case 'creator':{
+case prefix+'owner':
+case prefix+'creator':{
 anj = generateWAMessageFromContent(from, {
 "contactsArrayMessage": {            
 "displayName": "‎99 kontak",            
