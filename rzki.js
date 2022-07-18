@@ -1686,7 +1686,7 @@ case prefix+'dashboard': case prefix+'dash': case prefix+'hitstat':{
                             var teks = `❏  *H I T S T A T*\n\n*“The total is ${total}hits.”*\n\n`
                             teks += `*Most Command Global*\n`
                             for (let u = 0; u < jumlahCmd; u ++) {
-                              teks += `${u + 1}. *Command* : ```${_cmd[u].nama}```\n*Hit* : ${_cmd[u].count}\n`
+                              teks += `${u + 1}. *Command* : ${monospace2}${_cmd[u].nama}${monospace2}\n*Hit* : ${_cmd[u].count}x\n`
                             }
                             /*teks += `\n*Most Command User*\n`
                             for (let i = 0; i < jumlah; i ++) {
