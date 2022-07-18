@@ -269,16 +269,16 @@ await rzki.sendPresenceUpdate('recording', m.chat)
 } else if (db.data.settings[botNumber].autongetik) {
 await rzki.sendPresenceUpdate('composing', m.chat)
 }
-//AutoRead
-if (db.data.settings[botNumber].autoread) {
-rzki.sendReadReceipt(from, m.sender, [m.key.id])
-}
 //AutoReact
 if (db.data.settings[botNumber].autoreact) {
 let reactrandom = ['🗿','✅','🤔','☑️'];
         let reaction3 = reactrandom[Math.floor(Math.random() * (reactrandom.length))];
 rzki.sendMessage(from, { react: { text: `${reaction3}`, key: m.key }})
 }
+}
+//AutoRead
+if (db.data.settings[botNumber].autoread) {
+rzki.sendReadReceipt(from, m.sender, [m.key.id])
 }
 // Logs;
 		if (!m.isGroup && isCmd && !m.key.fromMe) {
@@ -1227,9 +1227,9 @@ let cBandwidth = await checkBandwidth()
 // Fake Reply
 //FAKEREPLY PRODUCT
 const ftoko = {
-key: {
-fromMe: false,
-participant: `0@s.whatsapp.net`, ...(from ? { remoteJid: "16505434800@s.whatsapp.net" } : {})
+key : {
+participant: `0@s.whatsapp.net`, ...(from ? 
+{ remoteJid: "16505434800@s.whatsapp.net" } : {}) 
 },
 message: {
 "productMessage": {
@@ -1772,7 +1772,7 @@ ngetik = true*/
 if (db.data.settings[botNumber].autongetik) return m.reply(`*Autongetik already ON.*`)
  db.data.settings[botNumber].autorekam = false
  db.data.settings[botNumber].autongetik = true
-m.reply('**Auto Ngetik successfully turned ON.*')
+m.reply('*Auto Ngetik successfully turned ON.*')
 } else if (args[0] === "off") {
 /*ngetik = false*/
 if (!db.data.settings[botNumber].autongetik) return m.reply(`*Autongetik already OFF.*`)
