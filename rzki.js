@@ -1630,7 +1630,7 @@ Untuk upgrade premium hanya Rp. 5.000 per bulan ( *.infopremium* )`)
 }
 break
 case prefix+'premium': case prefix+'infopremium':{
-reply(premN)
+reply(mess.premN)
 }
 break
     case prefix+'dashboard': case prefix+'dash':
@@ -5422,8 +5422,12 @@ let media = await quoted.download()
 m.reply(`Mengirim Broadcast Ke ${anu.length} Group Chat, Waktu Selesai ${anu.length * 2.5} detik`)
 for (let i of anu) {
 await sleep(2500)
-let txt = `❏  *B R O A D C A S T*\n\n${text}`
-rzki.sendMessage(i, {caption:txt, video:media}, {quoted: m})
+let txt = `❏  *B R O A D C A S T*\n\n${args[1]}\n`
+if (args[0] == `-video`) {
+rzki.sendMessage(i, {caption:txt, video:media})
+} else if (args[0] == `-image`) {
+rzki.sendMessage(i, {caption:txt, image:media})
+}
 //quoted.copyNForward(i, true)
 }
 m.reply(`Sukses Mengirim Broadcast Ke ${anu.length} Group`)
