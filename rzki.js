@@ -1690,8 +1690,8 @@ case prefix+'dashboard': case prefix+'dash': case prefix+'hitstat':{
                             }
                             /*teks += `\n*Most Command User*\n`
                             for (let i = 0; i < jumlah; i ++) {
-                              teks += `• ${_cmdUser[posi].db[i].nama} : ${_cmdUser[posi].db[i].count}\n`*/
-                            }
+                              teks += `• ${_cmdUser[posi].db[i].nama} : ${_cmdUser[posi].db[i].count}\n`
+                            }*/
                             faketroli(teks)
                             }
                             break
