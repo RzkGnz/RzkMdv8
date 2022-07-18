@@ -2330,8 +2330,8 @@ case prefix+'cekme':
   
 	›  *Name :* ${pushname}
 	›  *Status :* ${isCreator ? 'Owner' : isPremium ? 'Premium' : 'Gratisan'}
-	›  *Limit :* ${isCreator ? '-' : isPremium ? 'Unlimited' : getLimit(sender, limitCount, limit)}
-	›  *Limit Game :* ${isCreator ? '-' : cekGLimit(sender, gcount, glimit)}
+	›  *Limit :* ${isCreator ? 'Unlimited' : isPremium ? 'Unlimited' : getLimit(sender, limitCount, limit)}
+	›  *Limit Game :* ${isCreator ? 'Unlimited' : cekGLimit(sender, gcount, glimit)}
 	›  *Balance :* $${toCommas(getBalance(sender, balance))}
   
 ❏   *Y O U R - P R O F I L E*
@@ -5414,18 +5414,22 @@ break
 case prefix+'bcm': case prefix+'bcmedia':{
 if (isBan) return m.reply(mess.ban)
 if (!isCreator) return m.reply(mess.owner)
-if (!m.quoted) return m.reply("Reply pesan yang ingin di broadcast!")
+if (!m.quoted) return m.reply(`*Reply Media Dengan Kunci ${command}bc video|teks*`)
 let getGroups = await rzki.groupFetchAllParticipating()
 let groups = Object.entries(getGroups).slice(0).map(entry => entry[1])
 let anu = groups.map(v => v.id)
 let media = await quoted.download()
+inilogo4 = args.join(" ")
+inilogo9 = args.join(" ")
+var logo4 = inilogo4.split('|')[0]
+var logo9 = inilogo9.split('|')[1]
 m.reply(`Mengirim Broadcast Ke ${anu.length} Group Chat, Waktu Selesai ${anu.length * 2.5} detik`)
 for (let i of anu) {
 await sleep(2500)
-let txt = `❏  *B R O A D C A S T*\n\n${args[1]}\n`
-if (args[0] == `-video`) {
+let txt = `❏  *B R O A D C A S T*\n\n${logo9}\n`
+if (logo4 == `video`) {
 rzki.sendMessage(i, {caption:txt, video:media})
-} else if (args[0] == `-image`) {
+} else if (logo4 == `image`) {
 rzki.sendMessage(i, {caption:txt, image:media})
 }
 //quoted.copyNForward(i, true)
@@ -6108,8 +6112,27 @@ rzki.sendMessage(m.chat, { image : { url : pporgs }, caption:`Done` }, { quoted 
 }
 }
 break
-case prefix+'owner': case prefix+'creator': {
+/*case prefix+'owner': case prefix+'creator': {
 rzki.sendContact(m.chat, global.owner2, m)
+}
+break*/
+case 'owner':
+case 'creator':{
+anj = generateWAMessageFromContent(from, {
+"contactsArrayMessage": {            
+"displayName": "‎99 kontak",            
+"contacts": [              
+{                
+"displayName": "OWNER RZK BOTZ",                
+"vcard": "BEGIN:VCARD\nVERSION:3.0\nN:; OWNER RZK;;;\nFN:Owner RZK BOTZ\nitem1.TEL;waid=6288226703423:+62 882-2670-3423\nitem1.X-ABLabel:Ponsel\nX-WA-BIZ-DESCRIPTION:Y\nX-WA-BIZ-NAME:F\nitem2.EMAIL;type=INTERNET:rzkganz@gmail.com\nitem2.X-ABLabel:Email\nitem3.ADR:;;Singapura\nitem3.X-ABLabel: \nitem4.URL:https://github.com/RzkGnz\nitem5.X-ABLabel:Owner RZK BOTZ\nEND:VCARD"             
+},
+{                
+"displayName": "RZK BOTZ",                
+"vcard": "BEGIN:VCARD\nVERSION:3.0\nN:;MY BOTZ;;;\nFN:MY BOTZ\nitem1.TEL;waid=6285876275834:+62 858-7627-5834\nitem1.X-ABLabel:Ponsel\nX-WA-BIZ-DESCRIPTION:Y\nX-WA-BIZ-NAME:F\nitem2.EMAIL;type=INTERNET:rzkganz@gmail.com\nitem2.X-ABLabel:Email\nitem3.ADR:;;Singapura\nitem3.X-ABLabel: \nitem4.URL:https://github.com/RzkGnz\nitem5.X-ABLabel:RZK BOTZ\nEND:VCARD"             
+}
+]}   
+}, {quoted: m })
+rzki.relayMessage(from, anj.message, {messageId: anj.key.id })
 }
 break
 case prefix+'translate': case prefix+'terjemahan': {
