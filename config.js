@@ -34,12 +34,14 @@ global.mess = {
     private: '*❏ AKSES DITOLAK*\n\n*Fitur Digunakan Hanya Untuk Private Chat!*',
     bot: '*❏ AKSES DITOLAK*\n\n*Fitur Khusus Pengguna Nomor Bot*',
     wait: '*Tunggu Beberapa Detik...*',
-    prem: 'Kamu bukan user premium, kirim perintah *#daftarprem* untuk membeli premium',
+    prem: '*Upgrade premium 🛍️*\n\n*Untuk menggunakan fitur ini*',
+    premN:'*❏ INFO PREMIUM*\n\nDengan mendaftar menjadi user premium anda akan mendapatkan keuntungan sebagai berikut :\n\n1. Bisa menggunakan semua fitur\n2. mendapatkan unlimited limit\n3. bisa memainkan di pesan pribadi\n\nSilahkan hubungi owner ( *.owner* ) untuk melakukan upgrade premium hanya dengan Rp. 5.000 per bulan\n\nInvite bot ke GC kalian ? ketik *.sewabot*',
+    limitH:'*❏ LIMIT HABIS*\n\nCara mendapatkan limit :\n1. Beli limit ( *.buylimit 10* )\n2. Bermain Games\n\n*Upgrade premium : unlimited limit*',
     linkm: '*Linknya Mana Kak?*',
     ban: 'Kamu telah dibanned oleh owner, Jika ingin di unbanned chat owner'
 }
 global.gamewaktu = 90,
-global.limitCount = 30,
+global.limitCount = 20,
 global.gcounto = {
 	"prem": 100000000000,
 	"user": 30
