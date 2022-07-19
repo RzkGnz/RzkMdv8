@@ -5482,7 +5482,7 @@ for (let i of anu) {
 await sleep(2500)
 let txt = `❏  *B R O A D C A S T*\n\n${logo9}`
 if (logo4 == `video`) {
-rzki.sendMessage(i, {caption:txt, video:media, mentions:participants.map(a => a.id)}})
+rzki.sendMessage(i, {caption:txt, video:media, mentions:participants.map(a => a.id)})
 } else if (logo4 == `image`) {
 rzki.sendMessage(i, {caption:txt, image:media})
 } else if (logo4 == `butvd`) {
