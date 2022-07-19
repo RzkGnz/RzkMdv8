@@ -1722,7 +1722,7 @@ m.reply("Succes Change Menu To Doc")
 break
 case prefix+'textwel':
 if (!isCreator) return m.reply(mess.owner)
-if (!q) return m.reply('Mau Set Welcome Ke Gmna? Welcome Yg Tersedia : 1,2,3')
+if (!q) return m.reply('Mau Set Welcome Ke Gmna? Welcome Yg Tersedia : 1,2,3,off')
 if (q == "1") {
 db.data.chats[m.chat].SetWelkam1 = true
 db.data.chats[m.chat].SetWelkam2 = false
@@ -1738,12 +1738,17 @@ db.data.chats[m.chat].SetWelkam1 = false
 db.data.chats[m.chat].SetWelkam2 = false
 db.data.chats[m.chat].SetWelkam3 = true
 m.reply("Succes Change Type 3")
+} else if (q == "off") {
+db.data.chats[m.chat].SetWelkam1 = false
+db.data.chats[m.chat].SetWelkam2 = false
+db.data.chats[m.chat].SetWelkam3 = false
+m.reply("Succes Change To Off")
 } else {
-		}
+	    }
 break
 case prefix+'textleft':
 if (!isCreator) return m.reply(mess.owner)
-if (!q) return m.reply('Mau Set Left Ke Gmna? Left Yg Tersedia : 1,2,3')
+if (!q) return m.reply('Mau Set Left Ke Gmna? Left Yg Tersedia : 1,2,3,off')
 if (q == "1") {
 db.data.chats[m.chat].SetLeft1 = true
 db.data.chats[m.chat].SetLeft2 = false
@@ -1759,6 +1764,11 @@ db.data.chats[m.chat].SetLeft1 = false
 db.data.chats[m.chat].SetLeft2 = false
 db.data.chats[m.chat].SetLeft3 = true
 m.reply("Succes Change Type 3")
+} else if (q == "off") {
+db.data.chats[m.chat].SetLeft1 = false
+db.data.chats[m.chat].SetLeft2 = false
+db.data.chats[m.chat].SetLeft3 = false
+m.reply("Succes Change To Off")
 } else {
 		}
 break
@@ -5458,7 +5468,7 @@ break
 case prefix+'bcm': case prefix+'bcmedia':{
 if (isBan) return m.reply(mess.ban)
 if (!isCreator) return m.reply(mess.owner)
-if (!m.quoted) return m.reply(`*Reply Media Dengan Kunci ${command}bc video|teks\n\nList:\n\n1. video\n2. image\n3. butvd*`)
+if (!m.quoted) return m.reply(`*Reply Media Dengan Kunci ${command} video|teks\n\nList:\n\n1. video\n2. image\n3. butvd\n4. butima*`)
 let getGroups = await rzki.groupFetchAllParticipating()
 let groups = Object.entries(getGroups).slice(0).map(entry => entry[1])
 let anu = groups.map(v => v.id)
@@ -5472,12 +5482,15 @@ for (let i of anu) {
 await sleep(2500)
 let txt = `❏  *B R O A D C A S T*\n\n${logo9}`
 if (logo4 == `video`) {
-rzki.sendMessage(i, {caption:txt, video:media})
+rzki.sendMessage(i, {caption:txt, video:media, mentions:participants.map(a => a.id)}})
 } else if (logo4 == `image`) {
 rzki.sendMessage(i, {caption:txt, image:media})
 } else if (logo4 == `butvd`) {
 var buttons = [{ urlButton: { displayText: buttdisp, url : buttlink } },]
 				rzki.sendMessage(i, { caption: txt, video:media, templateButtons: buttons, footer: '‎', mentions: [sender]} )
+} else if (logo4 == `butima`) {
+var buttons = [{ urlButton: { displayText: buttdisp, url : buttlink } },]
+				rzki.sendMessage(i, { caption: txt, image:media, templateButtons: buttons, footer: '‎', mentions: [sender]} )
 }
 //quoted.copyNForward(i, true)
 }
@@ -5487,7 +5500,7 @@ break
 case prefix+'bcallm': case prefix+'bcallmedia':{
 if (isBan) return m.reply(mess.ban)
 if (!isCreator) return m.reply(mess.owner)
-if (!m.quoted) return m.reply(`*Reply Media Dengan Kunci ${command}bc video|teks\n\nList:\n\n1. video\n2. image\n3. butvd*`)
+if (!m.quoted) return m.reply(`*Reply Media Dengan Kunci ${command} video|teks\n\nList:\n\n1. video\n2. image\n3. butvd\n4. butima*`)
 let anu = await store.chats.all().map(v => v.id)
 let media = await quoted.download()
 inilogo4 = args.join(" ")
@@ -5505,6 +5518,9 @@ rzki.sendMessage(i, {caption:txt, image:media})
 } else if (logo4 == `butvd`) {
 var buttons = [{ urlButton: { displayText: buttdisp, url : buttlink } },]
 				rzki.sendMessage(i, { caption: txt, video:media, templateButtons: buttons, footer: '‎', mentions: [sender]} )
+} else if (logo4 == `butima`) {
+var buttons = [{ urlButton: { displayText: buttdisp, url : buttlink } },]
+				rzki.sendMessage(i, { caption: txt, image:media, templateButtons: buttons, footer: '‎', mentions: [sender]} )
 }
 //quoted.copyNForward(i, true)
 }
