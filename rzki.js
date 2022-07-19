@@ -5470,14 +5470,14 @@ var logo9 = inilogo9.split('|')[1]
 m.reply(`Mengirim Broadcast Ke ${anu.length} Group Chat, Waktu Selesai ${anu.length * 2.5} detik`)
 for (let i of anu) {
 await sleep(2500)
-let txt = `❏  *B R O A D C A S T*\n\n${logo9}\n`
+let txt = `❏  *B R O A D C A S T*\n\n${logo9}`
 if (logo4 == `video`) {
 rzki.sendMessage(i, {caption:txt, video:media})
 } else if (logo4 == `image`) {
 rzki.sendMessage(i, {caption:txt, image:media})
 } else if (logo4 == `butvd`) {
 var buttons = [{ urlButton: { displayText: buttdisp, url : buttlink } },]
-				rzki.sendMessage(from, { caption: txt, video:media, templateButtons: buttons, footer: '‎', mentions: [sender]} )
+				rzki.sendMessage(i, { caption: txt, video:media, templateButtons: buttons, footer: '‎', mentions: [sender]} )
 }
 //quoted.copyNForward(i, true)
 }
@@ -5504,7 +5504,7 @@ rzki.sendMessage(i, {caption:txt, video:media})
 rzki.sendMessage(i, {caption:txt, image:media})
 } else if (logo4 == `butvd`) {
 var buttons = [{ urlButton: { displayText: buttdisp, url : buttlink } },]
-				rzki.sendMessage(from, { caption: txt, video:media, templateButtons: buttons, footer: '‎', mentions: [sender]} )
+				rzki.sendMessage(i, { caption: txt, video:media, templateButtons: buttons, footer: '‎', mentions: [sender]} )
 }
 //quoted.copyNForward(i, true)
 }
