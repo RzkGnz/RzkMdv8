@@ -3694,7 +3694,7 @@ break
 //Primbon
 case prefix+'nomerhoki': case prefix+'nomorhoki': {
 if (isBan) return m.reply(mess.ban)
-if (!Number(text)) return m.reply(`Example : ${prefix + command} 6281385062956`)
+if (!Number(text)) return m.reply(`Example : ${prefix + command.slice(1)} 6281385062956`)
 let anu = await primbon.nomer_hoki(Number(text))
 if (anu.status == false) return m.reply(anu.message)
 rzki.sendText(m.chat, `▸ *Nomor HP :* ${anu.message.nomer_hp}\n▸ *Angka Shuzi :* ${anu.message.angka_shuzi}\n▸ *Energi Positif :*\n- Kekayaan : ${anu.message.energi_positif.kekayaan}\n- Kesehatan : ${anu.message.energi_positif.kesehatan}\n- Cinta : ${anu.message.energi_positif.cinta}\n- Kestabilan : ${anu.message.energi_positif.kestabilan}\n- Persentase : ${anu.message.energi_positif.persentase}\n▸ *Energi Negatif :*\n- Perselisihan : ${anu.message.energi_negatif.perselisihan}\n- Kehilangan : ${anu.message.energi_negatif.kehilangan}\n- Malapetaka : ${anu.message.energi_negatif.malapetaka}\n- Kehancuran : ${anu.message.energi_negatif.kehancuran}\n- Persentase : ${anu.message.energi_negatif.persentase}`, m)
@@ -3702,7 +3702,7 @@ rzki.sendText(m.chat, `▸ *Nomor HP :* ${anu.message.nomer_hp}\n▸ *Angka Shuz
 break
 case prefix+'artimimpi': case prefix+'tafsirmimpi': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} belanja`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} belanja`)
 let anu = await primbon.tafsir_mimpi(text)
 if (anu.status == false) return m.reply(anu.message)
 rzki.sendText(m.chat, `▸ *Mimpi :* ${anu.message.mimpi}\n▸ *Arti :* ${anu.message.arti}\n▸ *Solusi :* ${anu.message.solusi}`, m)
@@ -3710,7 +3710,7 @@ rzki.sendText(m.chat, `▸ *Mimpi :* ${anu.message.mimpi}\n▸ *Arti :* ${anu.me
 break
 case prefix+'ramalanjodoh': case prefix+'ramaljodoh': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} Salman, 22, 7, 2015, Aina, 16, 3, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} Salman, 22, 7, 2015, Aina, 16, 3, 2015`)
 let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
 let anu = await primbon.ramalan_jodoh(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
 if (anu.status == false) return m.reply(anu.message)
@@ -3719,7 +3719,7 @@ rzki.sendText(m.chat, `▸ *Nama Anda :* ${anu.message.nama_anda.nama}\n▸ *Lah
 break
 case prefix+'ramalanjodohbali': case prefix+'ramaljodohbali': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} Salman, 22, 7, 2015, Aina, 16, 3, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} Salman, 22, 7, 2015, Aina, 16, 3, 2015`)
 let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
 let anu = await primbon.ramalan_jodoh_bali(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
 if (anu.status == false) return m.reply(anu.message)
@@ -3728,7 +3728,7 @@ rzki.sendText(m.chat, `▸ *Nama Anda :* ${anu.message.nama_anda.nama}\n▸ *Lah
 break
 case prefix+'suamiistri': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} Salman, 22, 7, 2015, Aina, 16, 3, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} Salman, 22, 7, 2015, Aina, 16, 3, 2015`)
 let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
 let anu = await primbon.suami_istri(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
 if (anu.status == false) return m.reply(anu.message)
@@ -3737,7 +3737,7 @@ rzki.sendText(m.chat, `▸ *Nama Suami :* ${anu.message.suami.nama}\n▸ *Lahir 
 break
 case prefix+'ramalancinta': case prefix+'ramalcinta': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} Salman, 22, 7, 2015, Aina, 16, 3, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} Salman, 22, 7, 2015, Aina, 16, 3, 2015`)
 let [nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2] = text.split`,`
 let anu = await primbon.ramalan_cinta(nama1, tgl1, bln1, thn1, nama2, tgl2, bln2, thn2)
 if (anu.status == false) return m.reply(anu.message)
@@ -3746,7 +3746,7 @@ rzki.sendText(m.chat, `▸ *Nama Anda :* ${anu.message.nama_anda.nama}\n▸ *Lah
 break
 case prefix+'artinama': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} Salman`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} Salman`)
 let anu = await primbon.arti_nama(text)
 if (anu.status == false) return m.reply(anu.message)
 rzki.sendText(m.chat, `▸ *Nama :* ${anu.message.nama}\n▸ *Arti :* ${anu.message.arti}\n▸ *Catatan :* ${anu.message.catatan}`, m)
@@ -3754,7 +3754,7 @@ rzki.sendText(m.chat, `▸ *Nama :* ${anu.message.nama}\n▸ *Arti :* ${anu.mess
 break
 case prefix+'kecocokannama': case prefix+'cocoknama': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} Salman, 22, 7, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} Salman, 22, 7, 2015`)
 let [nama, tgl, bln, thn] = text.split`,`
 let anu = await primbon.kecocokan_nama(nama, tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3763,7 +3763,7 @@ rzki.sendText(m.chat, `▸ *Nama :* ${anu.message.nama}\n▸ *Lahir :* ${anu.mes
 break
 case prefix+'kecocokanpasangan': case prefix+'cocokpasangan': case prefix+'pasangan': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} Salman|Aina`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} Salman|Aina`)
 let [nama1, nama2] = text.split`|`
 let anu = await primbon.kecocokan_nama_pasangan(nama1, nama2)
 if (anu.status == false) return m.reply(anu.message)
@@ -3772,7 +3772,7 @@ rzki.sendImage(m.chat,  anu.message.gambar, `▸ *Nama Anda :* ${anu.message.nam
 break
 case prefix+'jadianpernikahan': case prefix+'jadiannikah': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} 6, 12, 2020`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} 6, 12, 2020`)
 let [tgl, bln, thn] = text.split`,`
 let anu = await primbon.tanggal_jadian_pernikahan(tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3781,7 +3781,7 @@ rzki.sendText(m.chat, `▸ *Tanggal Pernikahan :* ${anu.message.tanggal}\n▸ *k
 break
 case prefix+'sifatusaha': {
 if (isBan) return m.reply(mess.ban)
-if (!text)return m.reply(`Example : ${prefix+ command} 28, 12, 2021`)
+if (!text)return m.reply(`Example : ${prefix+ command.slice(1)} 28, 12, 2021`)
 let [tgl, bln, thn] = text.split`,`
 let anu = await primbon.sifat_usaha_bisnis(tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3790,7 +3790,7 @@ rzki.sendText(m.chat, `▸ *Lahir :* ${anu.message.hari_lahir}\n▸ *Usaha :* ${
 break
 case prefix+'rejeki': case prefix+'rezeki': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} 22, 7, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} 22, 7, 2015`)
 let [tgl, bln, thn] = text.split`,`
 let anu = await primbon.rejeki_hoki_weton(tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3799,7 +3799,7 @@ rzki.sendText(m.chat, `▸ *Lahir :* ${anu.message.hari_lahir}\n▸ *Rezeki :* $
 break
 case prefix+'pekerjaan': case prefix+'kerja': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} 22, 7, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} 22, 7, 2015`)
 let [tgl, bln, thn] = text.split`,`
 let anu = await primbon.pekerjaan_weton_lahir(tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3817,7 +3817,7 @@ rzki.sendText(m.chat, `▸ *Analisa :* ${anu.message.analisa}\n▸ *Angka Akar :
 break
 case prefix+'potensipenyakit': case prefix+'penyakit': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} 22, 7, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} 22, 7, 2015`)
 let [tgl, bln, thn] = text.split`,`
 let anu = await primbon.cek_potensi_penyakit(tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3826,7 +3826,7 @@ rzki.sendText(m.chat, `▸ *Analisa :* ${anu.message.analisa}\n▸ *Sektor :* ${
 break
 case prefix+'artitarot': case prefix+'tarot': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} 22, 7, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} 22, 7, 2015`)
 let [tgl, bln, thn] = text.split`,`
 let anu = await primbon.arti_kartu_tarot(tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3835,7 +3835,7 @@ rzki.sendImage(m.chat, anu.message.image, `▸ *Lahir :* ${anu.message.tgl_lahir
 break
 case prefix+'fengshui': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} Salman, 1, 2005\n\nNote : ${prefix + command} Nama, gender, tahun lahir\nGender : 1 untuk laki-laki & 2 untuk perempuan`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} Salman, 1, 2005\n\nNote : ${prefix + command.slice(1)} Nama, gender, tahun lahir\nGender : 1 untuk laki-laki & 2 untuk perempuan`)
 let [nama, gender, tahun] = text.split`,`
 let anu = await primbon.perhitungan_feng_shui(nama, gender, tahun)
 if (anu.status == false) return m.reply(anu.message)
@@ -3844,7 +3844,7 @@ rzki.sendText(m.chat, `▸ *Nama :* ${anu.message.nama}\n▸ *Lahir :* ${anu.mes
 break
 case prefix+'haribaik': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} 22, 7, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} 22, 7, 2015`)
 let [tgl, bln, thn] = text.split`,`
 let anu = await primbon.petung_hari_baik(tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3853,7 +3853,7 @@ rzki.sendText(m.chat, `▸ *Lahir :* ${anu.message.tgl_lahir}\n▸ *Kala Tinanta
 break
 case prefix+'harisangar': case prefix+'taliwangke': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} 22, 7, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} 22, 7, 2015`)
 let [tgl, bln, thn] = text.split`,`
 let anu = await primbon.hari_sangar_taliwangke(tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3862,7 +3862,7 @@ rzki.sendText(m.chat, `▸ *Lahir :* ${anu.message.tgl_lahir}\n▸ *Hasil :* ${a
 break
 case prefix+'harinaas': case prefix+'harisial': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} 22, 7, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} 22, 7, 2015`)
 let [tgl, bln, thn] = text.split`,`
 let anu = await primbon.primbon_hari_naas(tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3871,7 +3871,7 @@ rzki.sendText(m.chat, `▸ *Hari Lahir :* ${anu.message.hari_lahir}\n▸ *Tangga
 break
 case prefix+'nagahari': case prefix+'harinaga': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} 22, 7, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} 22, 7, 2015`)
 let [tgl, bln, thn] = text.split`,`
 let anu = await primbon.rahasia_naga_hari(tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3880,7 +3880,7 @@ rzki.sendText(m.chat, `▸ *Hari Lahir :* ${anu.message.hari_lahir}\n▸ *Tangga
 break
 case prefix+'arahrejeki': case prefix+'arahrezeki': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} 22, 7, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} 22, 7, 2015`)
 let [tgl, bln, thn] = text.split`,`
 let anu = await primbon.primbon_arah_rejeki(tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3889,7 +3889,7 @@ rzki.sendText(m.chat, `▸ *Hari Lahir :* ${anu.message.hari_lahir}\n▸ *tangga
 break
 case prefix+'peruntungan': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} Salman, 22, 7, 2015, 2022\n\nNote : ${prefix + command} Nama, tanggal lahir, bulan lahir, tahun lahir, untuk tahun`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} Salman, 22, 7, 2015, 2022\n\nNote : ${prefix + command.slice(1)} Nama, tanggal lahir, bulan lahir, tahun lahir, untuk tahun`)
 let [nama, tgl, bln, thn, untuk] = text.split`,`
 let anu = await primbon.ramalan_peruntungan(nama, tgl, bln, thn, untuk)
 if (anu.status == false) return m.reply(anu.message)
@@ -3898,7 +3898,7 @@ rzki.sendText(m.chat, `▸ *Nama :* ${anu.message.nama}\n▸ *Lahir :* ${anu.mes
 break
 case prefix+'weton': case prefix+'wetonjawa': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} 22, 7, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} 22, 7, 2015`)
 let [tgl, bln, thn] = text.split`,`
 let anu = await primbon.weton_jawa(tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3907,7 +3907,7 @@ rzki.sendText(m.chat, `▸ *Tanggal :* ${anu.message.tanggal}\n▸ *Jumlah Neptu
 break
 case prefix+'sifat': case prefix+'karakter': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} Salman, 22, 7, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} Salman, 22, 7, 2015`)
 let [nama, tgl, bln, thn] = text.split`,`
 let anu = await primbon.sifat_karakter_tanggal_lahir(nama, tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3916,7 +3916,7 @@ rzki.sendText(m.chat, `▸ *Nama :* ${anu.message.nama}\n▸ *Lahir :* ${anu.mes
 break
 case prefix+'keberuntungan': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} Salman, 22, 7, 2015`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} Salman, 22, 7, 2015`)
 let [nama, tgl, bln, thn] = text.split`,`
 let anu = await primbon.potensi_keberuntungan(nama, tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3925,7 +3925,7 @@ rzki.sendText(m.chat, `▸ *Nama :* ${anu.message.nama}\n▸ *Lahir :* ${anu.mes
 break
 case prefix+'memancing': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} 12, 1, 2022`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} 12, 1, 2022`)
 let [tgl, bln, thn] = text.split`,`
 let anu = await primbon.primbon_memancing_ikan(tgl, bln, thn)
 if (anu.status == false) return m.reply(anu.message)
@@ -3934,7 +3934,7 @@ rzki.sendText(m.chat, `▸ *Tanggal :* ${anu.message.tgl_memancing}\n▸ *Hasil 
 break
 case prefix+'masasubur': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} 12, 1, 2022, 28\n\nNote : ${prefix + command} hari pertama menstruasi, siklus`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} 12, 1, 2022, 28\n\nNote : ${prefix + command.slice(1)} hari pertama menstruasi, siklus`)
 let [tgl, bln, thn, siklus] = text.split`,`
 let anu = await primbon.masa_subur(tgl, bln, thn, siklus)
 if (anu.status == false) return m.reply(anu.message)
@@ -3943,7 +3943,7 @@ rzki.sendText(m.chat, `▸ *Hasil :* ${anu.message.result}\n▸ *Catatan :* ${an
 break
 case prefix+'zodiak': case prefix+'zodiac': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix+ command} 7 7 2005`)
+if (!text) return m.reply(`Example : ${prefix+ command.slice(1)} 7 7 2005`)
 let zodiak = [
 ["capricorn", new Date(1970, 0, 1)],
 ["aquarius", new Date(1970, 0, 20)],
@@ -3979,7 +3979,7 @@ rzki.sendText(m.chat, `▸ *Zodiak :* ${anu.message.zodiak}\n▸ *Nomor :* ${anu
 break
 case prefix+'shio': {
 if (isBan) return m.reply(mess.ban)
-if (!text) return m.reply(`Example : ${prefix + command} tikus\n\nNote : For Detail https://primbon.com/shio.htm`)
+if (!text) return m.reply(`Example : ${prefix + command.slice(1)} tikus\n\nNote : For Detail https://primbon.com/shio.htm`)
 let anu = await primbon.shio(text)
 if (anu.status == false) return m.reply(anu.message)
 rzki.sendText(m.chat, `▸ *Hasil :* ${anu.message}`, m)
