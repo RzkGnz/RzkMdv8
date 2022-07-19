@@ -1684,10 +1684,11 @@ case prefix+'dashboard': case prefix+'dash': case prefix+'hitstat':{
                               total = total + o.count
                             }
                             var teks = `❏  *H I T S T A T*\n\n*“The total is ${total}hits.”*\n\n`
-                            teks += `*Most Command Global*\n`
+                            //teks += ``
                             for (let u = 0; u < jumlahCmd; u ++) {
-                              teks += `${u + 1}. *Command* : ${monospace2}${_cmd[u].nama}${monospace2}\n   *Hit* : ${_cmd[u].count}x\n`
+                              teks += `${u + 1}. *Command* : ${monospace2}${_cmd[u].nama}${monospace2}\n    *Hit* : ${_cmd[u].count}x\n`
                             }
+                            teks +=`\n*𝚂𝚒𝚖𝚙𝚕𝚎 𝚠𝚑𝚊𝚝𝚜𝚊𝚙𝚙 𝙱𝙾𝚃 [ 𝙼𝙳 ]*`
                             /*teks += `\n*Most Command User*\n`
                             for (let i = 0; i < jumlah; i ++) {
                               teks += `• ${_cmdUser[posi].db[i].nama} : ${_cmdUser[posi].db[i].count}\n`
