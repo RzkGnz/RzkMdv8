@@ -187,27 +187,22 @@ textwel = `𝙃𝙀𝙇𝙇𝙊 𝙒𝙀𝙇𝘾𝙊𝙈𝙀 𝙏𝙊 _*${metada
 • 𝘼𝙎𝙆𝙊𝙏:
 
 𝙎𝙀𝙍𝙄𝙉𝙂 𝙉𝙄𝙈𝘽𝙍𝙐𝙉𝙂 𝘿𝘼𝙉 𝘽𝘼𝘾𝘼 𝙍𝙐𝙇𝙀𝙎 𝙂𝙍𝙐𝙋`
-}
-if (db.data.chats[m.chat].SetWelkam2) {      
+} else if (db.data.chats[m.chat].SetWelkam2) {      
 textwel = `𝙃𝙀𝙇𝙇𝙊 _*@${num.split("@")[0]}*_\n𝙒𝙀𝙇𝘾𝙊𝙈𝙀 𝙏𝙊 _*${metadata.subject}*_\n𝘿𝙀𝙎𝘾 _*${metadata.desc}*_`
-}
-if (db.data.chats[m.chat].SetWelkam3) {      
+} else if (db.data.chats[m.chat].SetWelkam3) {      
 textwel = `𝙒𝙀𝙇𝘾𝙊𝙈𝙀  _*@${num.split("@")[0]}*_ `
-}
-         
-if (db.data.chats[m.chat].SetLeft1) {                                           
-textleft = `𝘽𝙔𝙀𝙀`
-}
-if (db.data.chats[m.chat].SetLeft2) {  
-textleft = `𝙎𝘼𝙔𝙊𝙉𝘼𝙍𝘼`
-}
-if (db.data.chats[m.chat].SetLeft3) {  
-textleft = `𝙇𝙀𝘼𝙑𝙄𝙉𝙂 𝙏𝙊 _*${metadata.subject}*_`
 }
                        var but = [{buttonId: `/`, buttonText: { displayText: "Welcome 🥳" }, type: 1 }]
 				rzki.sendMessage(anu.id, { caption: textwel, image: {url: ppuser}, buttons: but, footer: `‎`, mentions: [num]})
                 } else if (anu.action == 'remove') {
                 if (!left.includes(anu.id)) return
+if (db.data.chats[m.chat].SetLeft1) {                                           
+textleft = `𝘽𝙔𝙀𝙀`
+} else if (db.data.chats[m.chat].SetLeft2) {  
+textleft = `𝙎𝘼𝙔𝙊𝙉𝘼𝙍𝘼`
+} else if (db.data.chats[m.chat].SetLeft3) {  
+textleft = `𝙇𝙀𝘼𝙑𝙄𝙉𝙂 𝙏𝙊 _*${metadata.subject}*_`
+}
                    // rzki.sendMessage(anu.id, { image: { url: ppuser }, contextInfo: { mentionedJid: [num] }, caption: `@${num.split("@")[0]} Leaving To ${metadata.subject}` })
                      var but = [{buttonId: `/`, buttonText: { displayText: "Good Bye 👋" }, type: 1 }]
 				rzki.sendMessage(anu.id, { caption: textleft, image: {url: ppuser}, buttons: but, footer: `‎`, mentions: [num]})
