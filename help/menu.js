@@ -320,6 +320,7 @@ exports.menurandom = (prefix) => {
 	›  ${prefix}setppbot *image*
 	›  ${prefix}join *link*
 	›  ${prefix}leavegc *group*
+	›  ${prefix}setbutbc *link|displaybutt*
 	›  ${prefix}bcall *query*
 	›  ${prefix}bcgroup *query*
 	›  ${prefix}bcgroup2 *query*
@@ -353,7 +354,9 @@ exports.menuowner = (prefix) => {
 	›  >> *eval v3*
 	›  x *eval v4*
 	›  => *eval v5*
-	›  $ *exec terminal*`
+	›  $ *exec terminal*
+	
+*𝚂𝚒𝚖𝚙𝚕𝚎 𝚠𝚑𝚊𝚝𝚜𝚊𝚙𝚙 𝙱𝙾𝚃 [ 𝙼𝙳 ]*`
 }
 exports.menumaker = (prefix) => {
   return `❏   *M A K E R*
@@ -426,7 +429,9 @@ exports.menumaker = (prefix) => {
 	›  ${prefix}cool *text|text*
 	›  ${prefix}layered *text|text*
 	›  ${prefix}3davengers *text|text*
-	›  ${prefix}marvel *text|text*`
+	›  ${prefix}marvel *text|text*
+	
+*𝚂𝚒𝚖𝚙𝚕𝚎 𝚠𝚑𝚊𝚝𝚜𝚊𝚙𝚙 𝙱𝙾𝚃 [ 𝙼𝙳 ]*`
 }
 exports.menucerpen = (prefix) => {
   return `❏   *C E R P E N*
@@ -479,7 +484,9 @@ exports.menucerpen = (prefix) => {
 	›  ${prefix}cerpen-romantis
 	›  ${prefix}cerpen-sastra
 	›  ${prefix}cerpen-sedih
-	›  ${prefix}cerpen-sejarah`
+	›  ${prefix}cerpen-sejarah
+	
+*𝚂𝚒𝚖𝚙𝚕𝚎 𝚠𝚑𝚊𝚝𝚜𝚊𝚙𝚙 𝙱𝙾𝚃 [ 𝙼𝙳 ]*`
 }
 exports.menuanime = (prefix) => {
   return `❏   *A N I M E*
@@ -511,5 +518,7 @@ exports.menuanime = (prefix) => {
 	›  ${prefix}wink
 	›  ${prefix}poke
 	›  ${prefix}dance
-	›  ${prefix}cringe`
+	›  ${prefix}cringe
+	
+*𝚂𝚒𝚖𝚙𝚕𝚎 𝚠𝚑𝚊𝚝𝚜𝚊𝚙𝚙 𝙱𝙾𝚃 [ 𝙼𝙳 ]*`
 }
