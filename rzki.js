@@ -33,6 +33,8 @@ const imgbbUploader = require('imgbb-uploader')
 const primbon = new Primbon()
 const emoji = new EmojiAPI()
 const { smsg, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, format, parseMention, getRandom, generateProfilePicture, reSize, runtime2 } = require('./lib/myfunc')
+const { msgFilter } = require('./lib/antispam')
+const { color, bgcolor } = require("./lib/color")
 const { aiovideodl } = require('./lib/scraper.js')
 const scraper = require('./lib/scrape')
 const textpro = require('./lib/textpro')
@@ -1586,13 +1588,10 @@ templateButtons: btn
 
 await rzki.sendMessage(m.chat, templateMessage, {quoted:m})
 }
-listmn3 = listmn3 ? listmn3 : {}
-            let id = m.chat
-            if (id in listmn3) {
-               //global.statistic[command].hitstat -= 1 
-               addCountCmd('#menu', sender, _cmd)
-               return rzki.sendText(m.chat, `Hai @${m.sender.split`@`[0]} ^\nUntuk menghindari spam, menu ditampilkan *sekali setiap 3 menit* dan Anda dapat mencoba menggulir ke atas.`, listmn3[id][0])
-            }
+if (m.message && msgFilter.isFiltered(from)) {
+console.log('->(SPAM)', color(moment(m.messageTimestamp * 100000).format('DD/MM/YYYY HH:mm:ss'), 'yellow'), color(`${command} [${args.length}]`), 'from', color(m.pushName))
+return reply('Woi Lu Terdeteksi Spam Bot! Beri Jeda Bot Selama 1 Menit')
+}
 }
 break
 case prefix+'cekupdate':{
