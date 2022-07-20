@@ -4900,9 +4900,9 @@ listnyd = 1
 for (let i of banUser) {
 teskd += `\n${listnyd++}. @${i.split("@")[0]}`
 listBloxk.push({
-title: "+" + i.split("@")[0], rowId: `block del ${i.split("@")[0]}`, description: "ketuk untuk mengunblockir"})
+title: "+" + i.split("@")[0], rowId: `.block del ${i.split("@")[0]}`, description: "ketuk untuk mengunblockir"})
 }
-teskd += `\n\nketuk button untuk mengunblockir`
+teskd += `\n\nketuk button untuk mengunblock`
 const sections = [
 {
 title: "Total Blockir " + banUser.length,
