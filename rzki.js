@@ -205,7 +205,8 @@ const gcounti = global.gcounto
 const gcount = isPremium ? gcounti.prem : gcounti.user
 
 // Other
-const isBan = banUser.includes(m.sender)
+banUser = await rzki.fetchBlocklist()
+const isBan = banUser ? banUser.includes(m.sender) : false
 const isRakyat = isCreator || global.rkyt.map(v => v.replace(/[^0-9]/g, '') + '@s.whatsapp.net').includes(m.sender) || false
 const AntiLink = m.isGroup ? ntilink.includes(from) : false
 const welcm = m.isGroup ? wlcm.includes(from) : false
@@ -1585,6 +1586,13 @@ templateButtons: btn
 
 await rzki.sendMessage(m.chat, templateMessage, {quoted:m})
 }
+listmn3 = listmn3 ? listmn3 : {}
+            let id = m.chat
+            if (id in listmn3) {
+               //global.statistic[command].hitstat -= 1 
+               addCountCmd('#menu', sender, _cmd)
+               return rzki.sendText(m.chat, `Hai @${m.sender.split`@`[0]} ^\nUntuk menghindari spam, menu ditampilkan *sekali setiap 3 menit* dan Anda dapat mencoba menggulir ke atas.`, listmn3[id][0])
+            }
 }
 break
 case prefix+'cekupdate':{
@@ -4864,27 +4872,56 @@ m.reply("Error")
 }
 }
 break
-case prefix+'ban': {
+case prefix+'ban': case prefix+'block': {
 if (isBan) return m.reply(mess.ban)
 if (!isCreator) return m.reply(mess.owner)
 if (!args[0]) return m.reply(`Pilih add atau del`)
-if (args[1]) {
-orgnye = args[1] + "@s.whatsapp.net"
-} else if (m.quoted) {
-orgnye = m.quoted.sender
-}
-const isBane = banUser.includes(orgnye)
+orgnye = m.mentionedJid[0] ? m.mentionedJid[0] : Number(args[1]) ? Number(args[1]) + "@s.whatsapp.net" : m.quoted ? m.quoted.sender : false
+if (!orgnye) return m.reply(`Example : \n- ${prefix + command} del/add <number/tag/reply>\n- ${prefix + command} del 6281385062956`)
+const isBane = banUser ? banUser.includes(orgnye) : false
 if (args[0] === "add") {
 if (isBane) return m.reply('User sudah dibanned')
-banUser.push(orgnye)
+rzki.updateBlockStatus(orgnye, 'block')
 m.reply(`Succes ban`)
 } else if (args[0] === "del") {
 if (!isBane) return m.reply('User tidak dibanned')
-let delbans = banUser.indexOf(orgnye)
-banUser.splice(delbans, 1)
+rzki.updateBlockStatus(orgnye, 'unblock')
 m.reply(`Succes delban`)
 } else {
 m.reply("Error")
+}
+}
+break
+case prefix+'listblock': case prefix+'listban': case prefix+'blocklist': case prefix+'banlist': {
+if (isBan) return m.reply(mess.ban)
+try {
+listBloxk = []
+teskd = ``
+listnyd = 1
+for (let i of banUser) {
+teskd += `\n${listnyd++}. @${i.split("@")[0]}`
+listBloxk.push({
+title: "+" + i.split("@")[0], rowId: `block del ${i.split("@")[0]}`, description: "ketuk untuk mengunblockir"})
+}
+teskd += `\n\nketuk button untuk mengunblockir`
+const sections = [
+{
+title: "Total Blockir " + banUser.length,
+rows: listBloxk
+}
+]
+
+const listMessage = {
+text: teskd,
+footer: namabot,
+title: "*L I S T - B L O C K*",
+buttonText: "List Block",
+mentions: await rzki.parseMention(teskd),
+sections
+}
+rzki.sendMessage(from, listMessage, {quoted:m})
+} catch {
+m.reply("Tidak ada user yang diblockir")
 }
 }
 break
@@ -5391,14 +5428,14 @@ let users = m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsap
 await rzki.groupParticipantsUpdate(m.chat, [users], 'add').then((res) => m.reply(jsonformat(res))).catch((err) => m.reply(jsonformat(err)))
 }
 break
-case prefix+'block':{
+case prefix+'blockuser':{
              addCountCmd(`#${command.slice(1)}`, sender, _cmd)
 		if (!isCreator) reply(mess.owner)
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'
 		await rzki.updateBlockStatus(users, 'block').then((res) => reply(jsonformat(res))).catch((err) => reply(jsonformat(err)))
 	}
 	break
-        case prefix+'unblock':{
+        case prefix+'unblockuser':{
              addCountCmd(`#${command.slice(1)}`, sender, _cmd)
 		if (!isCreator) reply(mess.owner)
 		let users = m.mentionedJid[0] ? m.mentionedJid[0] : m.quoted ? m.quoted.sender : text.replace(/[^0-9]/g, '')+'@s.whatsapp.net'

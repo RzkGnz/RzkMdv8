@@ -10,7 +10,6 @@ global.err4r = fs.readFileSync("./media/image/error.jpg")
 global.owner = ['6288226703423','6285876275834']
 global.owner2 = ['6288226703423','6285876275834']
 global.rkyt = []
-global.banUser = ['6281366679021@s.whatsapp.net']
 global.ntilink = ['120363043965529911@g.us','120363022988111568@g.us']
 global.wlcm = ['120363040112284231@g.us','120363023112413670@g.us','6285692949920-1620369637@g.us']
 global.left = ['120363040112284231@g.us','120363023112413670@g.us','6285692949920-1620369637@g.us']
@@ -38,7 +37,7 @@ global.mess = {
     premN:'*❏ INFO PREMIUM*\n\nDengan mendaftar menjadi user premium anda akan mendapatkan keuntungan sebagai berikut :\n\n1. Bisa menggunakan semua fitur\n2. mendapatkan unlimited limit\n3. bisa memainkan di pesan pribadi\n\nSilahkan hubungi owner ( *.owner* ) untuk melakukan upgrade premium hanya dengan Rp. 5.000 per bulan\n\nInvite bot ke GC kalian ? ketik *.sewabot*',
     limitH:'*❏ LIMIT HABIS*\n\nCara mendapatkan limit :\n1. Beli limit ( *.buylimit 10* )\n2. Bermain Games\n\n*Upgrade premium : unlimited limit*',
     linkm: '*Linknya Mana Kak?*',
-    ban: 'Kamu telah dibanned oleh owner, Jika ingin di unbanned chat owner'
+    ban: '*Kamu telah dibanned oleh owner, Jika ingin di unbanned chat owner*'
 }
 global.gamewaktu = 90,
 global.limitCount = 20,
