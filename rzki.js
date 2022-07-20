@@ -28,12 +28,11 @@ const fetch = require('node-fetch')
 const { performance } = require('perf_hooks')
 const { Primbon } = require('scrape-primbon')
 const { EmojiAPI } = require("emoji-api")
-const { color, bgcolor } = require('./lib/color')
+const { color } = require('./lib/color')
 const imgbbUploader = require('imgbb-uploader')
 const primbon = new Primbon()
 const emoji = new EmojiAPI()
 const { smsg, formatp, tanggal, formatDate, getTime, isUrl, sleep, clockString, runtime, fetchJson, getBuffer, jsonformat, format, parseMention, getRandom, generateProfilePicture, reSize, runtime2 } = require('./lib/myfunc')
-const { msgFilter } = require('./lib/antispam')
 const { aiovideodl } = require('./lib/scraper.js')
 const scraper = require('./lib/scrape')
 const textpro = require('./lib/textpro')
@@ -1586,10 +1585,6 @@ templateButtons: btn
 }
 
 await rzki.sendMessage(m.chat, templateMessage, {quoted:m})
-}
-if (m.message && msgFilter.isFiltered(from)) {
-console.log('->(SPAM)', color(moment(m.messageTimestamp * 100000).format('DD/MM/YYYY HH:mm:ss'), 'yellow'), color(`${command} [${args.length}]`), 'from', color(m.pushName))
-return reply('Woi Lu Terdeteksi Spam Bot! Beri Jeda Bot Selama 1 Menit')
 }
 }
 break
@@ -4595,6 +4590,7 @@ m.reply(`${m.pushName} sekarang afk\nAlasan : ${args.join(" ") ? args.join(" ") 
 break	
 case prefix+'setcmd': {
 if (isBan) return m.reply(mess.ban)
+if (!isCreator) return m.reply(mess.owner)
 if (!m.quoted) return m.reply('Reply Pesan!')
 if (!m.quoted.fileSha256) return m.reply('SHA256 Hash Missing')
 if (!args.join(" ")) return m.reply(`Untuk Command Apa?`)
@@ -4612,6 +4608,7 @@ m.reply(`Done!`)
 break
 case prefix+'delcmd': {
 if (isBan) return m.reply(mess.ban)
+if (!isCreator) return m.reply(mess.owner)
 let hash = m.quoted.fileSha256.toString('base64')
 if (!hash) return m.reply(`Tidak ada hash`)
 if (global.db.data.sticker[hash] && global.db.data.sticker[hash].locked) return m.reply('You have no permission to delete this sticker command')
@@ -4899,12 +4896,12 @@ listnyd = 1
 for (let i of banUser) {
 teskd += `\n${listnyd++}. @${i.split("@")[0]}`
 listBloxk.push({
-title: "+" + i.split("@")[0], rowId: `.block del ${i.split("@")[0]}`, description: "ketuk untuk mengunblockir"})
+title: "+" + i.split("@")[0], rowId: `.block del ${i.split("@")[0]}`, description: "ketuk untuk mengunblock"})
 }
 teskd += `\n\nketuk button untuk mengunblock`
 const sections = [
 {
-title: "Total Blockir " + banUser.length,
+title: "Total Block " + banUser.length,
 rows: listBloxk
 }
 ]
