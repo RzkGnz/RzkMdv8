@@ -63,8 +63,10 @@ let limit = JSON.parse(fs.readFileSync('./src/database/limit.json'));
 let glimit = JSON.parse(fs.readFileSync('./src/database/glimit.json'));
 
 //══════════[ Database Dashboard ]══════════//
-let _cmd = JSON.parse(fs.readFileSync('./src/database/command.json'));
-let _cmdUser = JSON.parse(fs.readFileSync('./src/database/commandUser.json'));
+/*let _cmd = JSON.parse(fs.readFileSync('./src/database/command.json'));
+let _cmdUser = JSON.parse(fs.readFileSync('./src/database/commandUser.json'));*/
+let _cmd = global.db.data.cmduser = []
+let _cmdUser = global.db.data.stats = []
 
 //══════════[ Other ]══════════//
 modelmenu = 'loc'
@@ -316,7 +318,8 @@ async function addCountCmdUser(nama, sender, u) {
      })
     if (posi === null) {
        u.push({jid: sender, db: [{nama: nama, count: 0}]})
-       fs.writeFileSync('./src/database/commandUser.json', JSON.stringify(u, null, 2));
+       //fs.writeFileSync('./src/database/commandUser.json', JSON.stringify(u, null, 2));
+       global.db.data.cmduser[JSON.stringify(u, null, 2)]
      Object.keys(u).forEach((i) => {
         if (u[i].jid === sender) {
           posi = i
@@ -331,10 +334,12 @@ async function addCountCmdUser(nama, sender, u) {
      })
     if (pos === null) {
       u[posi].db.push({nama: nama, count: 1})
-      fs.writeFileSync('./src/database/commandUser.json', JSON.stringify(u, null, 2));
+      //fs.writeFileSync('./src/database/commandUser.json', JSON.stringify(u, null, 2));
+      global.db.data.cmduser[JSON.stringify(u, null, 2)]
      } else {
       u[posi].db[pos].count += 1
-      fs.writeFileSync('./src/database/commandUser.json', JSON.stringify(u, null, 2));
+      //fs.writeFileSync('./src/database/commandUser.json', JSON.stringify(u, null, 2));
+      global.db.data.cmduser[JSON.stringify(u, null, 2)]
      }
     }
    }
@@ -349,10 +354,12 @@ async function addCountCmdUser(nama, sender, u) {
        })
        if (posi === null) {
          _db.push({nama: nama, count: 1})
-         fs.writeFileSync('./src/database/command.json',JSON.stringify(_db, null, 2));
+         //fs.writeFileSync('./src/database/command.json',JSON.stringify(_db, null, 2));
+         global.db.data.stats[JSON.stringify(_db, null, 2)]
        } else {
        _db[posi].count += 1
-       fs.writeFileSync('./src/database/command.json',JSON.stringify(_db, null, 2));
+       //fs.writeFileSync('./src/database/command.json',JSON.stringify(_db, null, 2));
+       global.db.data.stats[JSON.stringify(_db, null, 2)]
      }
    }
 
