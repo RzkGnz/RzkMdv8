@@ -63,10 +63,8 @@ let limit = JSON.parse(fs.readFileSync('./src/database/limit.json'));
 let glimit = JSON.parse(fs.readFileSync('./src/database/glimit.json'));
 
 //══════════[ Database Dashboard ]══════════//
-/*let _cmd = JSON.parse(fs.readFileSync('./src/database/command.json'));
-let _cmdUser = JSON.parse(fs.readFileSync('./src/database/commandUser.json'));*/
-let _cmd = global.db.data.cmduser = []
-let _cmdUser = global.db.data.stats = []
+let _cmd = JSON.parse(fs.readFileSync('./src/database/command.json'));
+let _cmdUser = JSON.parse(fs.readFileSync('./src/database/commandUser.json'));
 
 //══════════[ Other ]══════════//
 modelmenu = 'loc'
@@ -231,6 +229,8 @@ const pickRandom = (arr) => {
         if (!('selff' in setting)) setting.selff = false
         if (!('mutechat' in setting)) setting.mutechat = false
         if (!('mutegrup' in setting)) setting.mutegrup = false
+       	if (!isNumber(setting.backupDB)) setting.backupDB = 0
+        if (!('backup' in setting)) setting.backup = false
         if (!('MenuLoc' in setting)) setting.MenuLoc = true
         if (!('MenuDoc' in setting)) setting.MenuDoc = false
         if (!('MenuGif' in setting)) setting.MenuGif = false
@@ -243,6 +243,8 @@ const pickRandom = (arr) => {
 		selff: false,
 		mutechat: false,
 		mutegrup: false,
+		backupDB: 0,
+		backup: false,
 		MenuLoc: true,
         MenuDoc: false,
         MenuGif: false,
@@ -318,8 +320,7 @@ async function addCountCmdUser(nama, sender, u) {
      })
     if (posi === null) {
        u.push({jid: sender, db: [{nama: nama, count: 0}]})
-       //fs.writeFileSync('./src/database/commandUser.json', JSON.stringify(u, null, 2));
-       global.db.data.cmduser[JSON.stringify(u, null, 2)]
+       fs.writeFileSync('./src/database/commandUser.json', JSON.stringify(u, null, 2));
      Object.keys(u).forEach((i) => {
         if (u[i].jid === sender) {
           posi = i
@@ -334,12 +335,10 @@ async function addCountCmdUser(nama, sender, u) {
      })
     if (pos === null) {
       u[posi].db.push({nama: nama, count: 1})
-      //fs.writeFileSync('./src/database/commandUser.json', JSON.stringify(u, null, 2));
-      global.db.data.cmduser[JSON.stringify(u, null, 2)]
+      fs.writeFileSync('./src/database/commandUser.json', JSON.stringify(u, null, 2));
      } else {
       u[posi].db[pos].count += 1
-      //fs.writeFileSync('./src/database/commandUser.json', JSON.stringify(u, null, 2));
-      global.db.data.cmduser[JSON.stringify(u, null, 2)]
+      fs.writeFileSync('./src/database/commandUser.json', JSON.stringify(u, null, 2));
      }
     }
    }
@@ -354,12 +353,10 @@ async function addCountCmdUser(nama, sender, u) {
        })
        if (posi === null) {
          _db.push({nama: nama, count: 1})
-         //fs.writeFileSync('./src/database/command.json',JSON.stringify(_db, null, 2));
-         global.db.data.stats[JSON.stringify(_db, null, 2)]
+         fs.writeFileSync('./src/database/command.json',JSON.stringify(_db, null, 2));
        } else {
        _db[posi].count += 1
-       //fs.writeFileSync('./src/database/command.json',JSON.stringify(_db, null, 2));
-       global.db.data.stats[JSON.stringify(_db, null, 2)]
+       fs.writeFileSync('./src/database/command.json',JSON.stringify(_db, null, 2));
      }
    }
 
@@ -372,6 +369,23 @@ async function addCountCmdUser(nama, sender, u) {
     })
      return posi
    }
+   
+// Backup db //
+let setting = global.db.data.settings[botNumber]
+if (setting.backup) {
+if (new Date() * 1 - setting.backupDB > 1000 * 60 * 60) {
+let d = new Date
+let date = d.toLocaleDateString('id', {
+day: 'numeric',
+month: 'long',
+year: 'numeric'
+})
+rzki.sendText(global.owner[1] + '@s.whatsapp.net', `Database: ${date}`, null)
+rzki.sendMessage(global.owner[1] + '@s.whatsapp.net', {document: fs.readFileSync('./src/database/command.json'), fileName: 'command.json', mimetype: 'application/json' })
+rzki.sendMessage(global.owner[1] + '@s.whatsapp.net', {document: fs.readFileSync('./src/database/balance.json'), fileName: 'balance.json', mimetype: 'application/json' })
+setting.backupDB = new Date() * 1
+}
+}
 
 let chats = global.db.data.chats[m.chat]
             if (typeof chats !== 'object') global.db.data.chats[m.chat] = {}
@@ -439,6 +453,9 @@ const buttonlink = (teks) => {
 function monospace(string) {
             return '```' + string + '```'
         }
+function bold(string) {
+            return '*' + string + '*'
+        }
 function randomNomor(min, max = null) {
 		  if (max !== null) {
 			min = Math.ceil(min);
@@ -453,6 +470,13 @@ function toCommas(x) {
     var pattern = /(-?\d+)(\d{3})/;
     while (pattern.test(x))
     x = x.replace(pattern, "$1,$2");
+    return x;
+}
+function toCommas2(x) {
+    x = x.toString()
+    var pattern = /(-?\d+)(\d{3})/;
+    while (pattern.test(x))
+    x = x.replace(pattern, "$1.$2");
     return x;
 }
 const fakey = (teks) => {
@@ -1916,6 +1940,24 @@ m.reply('*Auto React successfully turned ON.*')
 if (!db.data.settings[botNumber].autoreact) return m.reply(`*Autongetik already OFF.*`)
 db.data.settings[botNumber].autoreact = false
 m.reply('*Auto React successfully turned OFF.*')
+} else {
+m.reply('on untuk mengaktifkan, off untuk menonaktifkan')
+}
+}
+break
+case prefix+'autobackup': {
+if (!isCreator) return reply(mess.owner)
+if (args.length < 1) return m.reply('ketik on untuk mengaktifkan\nketik off untuk menonaktifkan')
+if (args[0] === "on") {
+if (db.data.settings[botNumber].backup) return m.reply(`*Auto Backup already ON.*`)
+//selff = true
+ db.data.settings[botNumber].backup = true
+m.reply('*Auto Backup successfully turned ON.*')
+} else if (args[0] === "off") {
+if (!db.data.settings[botNumber].backup) return m.reply(`*Auto Backup already OFF.*`)
+//selff = false
+ db.data.settings[botNumber].backup = false
+m.reply('*Auto Backup successfully turned OFF.*')
 } else {
 m.reply('on untuk mengaktifkan, off untuk menonaktifkan')
 }
@@ -5701,6 +5743,21 @@ const getCase = (cases) => {
 return "case prefix+"+`'${cases}'`+fs.readFileSync("rzki.js").toString().split('case prefix+\''+cases+'\'')[1].split("break")[0]+"break"
 }
 reply(`${getCase(q)}`)
+break
+case prefix+'sv':
+case prefix+'save':{
+addCountCmd('#save', m.sender, _cmd)
+try {
+if (!isCreator) return m.reply(mess.owner)
+if (!text) return reply(`Apa yang mau di save?\nContoh ${prefix + command.slice(1)} lib/anu.js`) 
+if (!m.quoted.text) return reply(`Reply code text!`)   
+let path = `${text}`    
+fs.writeFileSync(path, m.quoted.text)    
+reply(`Saved ${path} to file!`)
+} catch (err) {
+reply('Error')
+}
+}
 break
 case prefix+'volume': {
 if (isBan) return m.reply(mess.ban)
