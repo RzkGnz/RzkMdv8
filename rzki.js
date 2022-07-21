@@ -219,6 +219,7 @@ const pickRandom = (arr) => {
 }
 
     let setting = global.db.data.settings[botNumber]
+    let isNumber2 = x => typeof x === 'number' && !isNaN(x)
             if (typeof setting !== 'object') global.db.data.settings[botNumber] = {}
 	    if (setting) {
 		if (!('autongetik' in setting)) setting.autongetik = false
@@ -229,7 +230,7 @@ const pickRandom = (arr) => {
         if (!('selff' in setting)) setting.selff = false
         if (!('mutechat' in setting)) setting.mutechat = false
         if (!('mutegrup' in setting)) setting.mutegrup = false
-       	if (!isNumber(setting.backupDB)) setting.backupDB = 0
+       	if (!isNumber2(setting.backupDB)) setting.backupDB = 0
         if (!('backup' in setting)) setting.backup = false
         if (!('MenuLoc' in setting)) setting.MenuLoc = true
         if (!('MenuDoc' in setting)) setting.MenuDoc = false
