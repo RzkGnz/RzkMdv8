@@ -2521,13 +2521,14 @@ break
 // Bank & Payment Menu
 			case prefix+'topbalance':{
                 balance.sort((a, b) => (a.balance < b.balance) ? 1 : -1)
-                let top = '*── 「 TOP BALANCE 」 ──*\n\n'
+                let top = '❏  *T O P - B A L A N C E*\n\n'
                 let arrTop = []
 				var total = 10
 				if (balance.length < 10) total = balance.length
                 for (let i = 0; i < total; i ++){
-                    top += `${i + 1}. @${balance[i].id.split("@")[0]}\n=> Balance : $${toCommas(balance[i].balance)}\n\n`
+                    top += `${i + 1}. @${balance[i].id.split("@")[0]}\n   *Saldo : $${toCommas(balance[i].balance)}*\n`
                     arrTop.push(balance[i].id)
+                    top +=`\n*𝚂𝚒𝚖𝚙𝚕𝚎 𝚠𝚑𝚊𝚝𝚜𝚊𝚙𝚙 𝙱𝙾𝚃 [ 𝙼𝙳 ]*`
                 }
                 mentions(top, arrTop, true)
             }
@@ -2587,10 +2588,10 @@ rzki.sendText(from, txt, m, { mentions: parseMention(txt) })
 					var isPrim = Ystatus ? true : _prem.checkPremiumUser(mentionUser[0], premium)
 				    var ggcount = isPrim ? gcounti.prem : gcounti.user
                     var limitMen = `${getLimit(mentionUser[0], limitCount, limit)}`
-                    textImg(`Limit : ${_prem.checkPremiumUser(mentionUser[0], premium) ? 'Unlimited' : limitMen}/${limitCount}\nLimit Game : ${cekGLimit(mentionUser[0], ggcount, glimit)}/${ggcount}\nBalance : $${toCommas(getBalance(mentionUser[0], balance))}\n\nKamu dapat membeli limit dengan ${prefix}buylimit dan ${prefix}buyglimit untuk membeli game limit`)
+                    textImg(`❏  *I N F O - U S E R*\n\nLimit : ${_prem.checkPremiumUser(mentionUser[0], premium) ? 'Unlimited' : limitMen}/${limitCount}\nLimit Game : ${cekGLimit(mentionUser[0], ggcount, glimit)}/${ggcount}\nBalance : $${toCommas(getBalance(mentionUser[0], balance))}\n\nKamu dapat membeli limit dengan ${prefix}buylimit dan ${prefix}buyglimit untuk membeli game limit`)
                 } else {
                     var limitPrib = `${getLimit(sender, limitCount, limit)}/${limitCount}`
-                    textImg(`Limit : ${isPremium ? 'Unlimited' : limitPrib}\nLimit Game : ${cekGLimit(sender, gcount, glimit)}/${gcount}\nBalance : $${toCommas(getBalance(sender, balance))}\n\nKamu dapat membeli limit dengan ${prefix}buylimit dan ${prefix}buyglimit untuk membeli game limit`)
+                    textImg(`❏  *I N F O - U S E R*\n\nLimit : ${isPremium ? 'Unlimited' : limitPrib}\nLimit Game : ${cekGLimit(sender, gcount, glimit)}/${gcount}\nBalance : $${toCommas(getBalance(sender, balance))}\n\nKamu dapat membeli limit dengan ${prefix}buylimit dan ${prefix}buyglimit untuk membeli game limit`)
                 }
 				break
 //hooh
