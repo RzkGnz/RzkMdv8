@@ -589,19 +589,16 @@ if (!user) continue
 let afkTime = user.afkTime
 if (!afkTime || afkTime < 0) continue
 let reason = user.afkReason || ''
-m.reply(`
-Jangan tag dia!
-Dia sedang AFK ${reason ? 'dengan alasan ' + reason : 'tanpa alasan'}
-Selama ${clockString(new Date - afkTime)}
-`.trim())
+m.reply(`*Jangan tag dia!*
+*Dia sedang AFK ${reason ? 'dengan alasan ' + reason : 'tanpa alasan'}*
+• *Selama :* [ *${clockString(new Date - afkTime)}* ]`.trim())
 }
 
 if (db.data.users[m.sender].afkTime > -1) {
 let user = global.db.data.users[m.sender]
-m.reply(`
-Kamu berhenti AFK${user.afkReason ? ' setelah ' + user.afkReason : ''}
-Selama ${clockString(new Date - user.afkTime)}
-`.trim())
+m.reply(`Kamu kembali online, setelah afk selama *${clockString(new Date - user.afkTime)}*
+
+• *Alasan* : ${user.afkReason ? ' setelah ' + user.afkReason : ''}`.trim())
 user.afkTime = -1
 user.afkReason = ''
 }
@@ -2557,9 +2554,17 @@ break
                  if (args2[2].includes("-")) return reply(`Jangan menggunakan -`)
                  var anu = getBalance(sender, balance)
                  if (anu < args2[2] || anu == 'undefined') return reply(`Balance Kamu Tidak Mencukupi Untuk Transfer Sebesar $${args2[2]}, Kumpulkan Terlebih Dahulu\nKetik ${prefix}balance, untuk mengecek Balance mu!`)
+                 var htgm = randomNomor(1000, 2500)
                  kurangBalance(sender, parseInt(args2[2]), balance)
+                 kurangBalance(sender, htgm, balance)
                  addBalance(mentionUser[0], parseInt(args2[2]), balance)
-                 reply(`Sukses transfer balance sebesar $${args2[2]} kepada @${mentionUser[0].split("@")[0]}`)
+                  let txt = `❏  *T R A N S F E R*
+
+“Berhasil melakukan transfer kepada *⁨@${mentionUser[0].split("@")[0]}* dengan nominal _$${args2[2]}_”
+
+🛒 *Pajak* : $${toCommas(htgm)}
+💸 *Sisa Saldo* : $${toCommas(getBalance(sender, balance))}`
+rzki.sendText(from, txt, m, { mentions: parseMention(txt) })
             }
                  break
             case prefix+'buygamelimit':
@@ -4585,7 +4590,8 @@ if (isBan) return m.reply(mess.ban)
 let user = global.db.data.users[m.sender]
 user.afkTime = + new Date
 user.afkReason = args.join(" ")
-m.reply(`${m.pushName} sekarang afk\nAlasan : ${args.join(" ") ? args.join(" ") : ''}`)
+let txt = `›  *⁨@${sender.split("@")[0]} sekarang afk!!*`
+rzki.sendText(from, txt, m, { mentions: parseMention(txt) })
 }
 break	
 case prefix+'setcmd': {
