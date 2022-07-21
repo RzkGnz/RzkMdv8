@@ -2528,8 +2528,8 @@ break
                 for (let i = 0; i < total; i ++){
                     top += `${i + 1}. @${balance[i].id.split("@")[0]}\n   *Saldo : $${toCommas(balance[i].balance)}*\n`
                     arrTop.push(balance[i].id)
-                    top +=`\n*𝚂𝚒𝚖𝚙𝚕𝚎 𝚠𝚑𝚊𝚝𝚜𝚊𝚙𝚙 𝙱𝙾𝚃 [ 𝙼𝙳 ]*`
                 }
+                    top +=`\n*𝚂𝚒𝚖𝚙𝚕𝚎 𝚠𝚑𝚊𝚝𝚜𝚊𝚙𝚙 𝙱𝙾𝚃 [ 𝙼𝙳 ]*`
                 mentions(top, arrTop, true)
             }
                 break
