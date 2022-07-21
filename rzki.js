@@ -371,9 +371,9 @@ async function addCountCmdUser(nama, sender, u) {
    }
    
 // Backup db //
-let setting = global.db.data.settings[botNumber]
-if (setting.backup) {
-if (new Date() * 1 - setting.backupDB > 1000 * 60 * 60) {
+let settingcuy = global.db.data.settings[botNumber]
+if (settingcuy.backup) {
+if (new Date() * 1 - settingcuy.backupDB > 1000 * 60 * 60) {
 let d = new Date
 let date = d.toLocaleDateString('id', {
 day: 'numeric',
@@ -383,7 +383,7 @@ year: 'numeric'
 rzki.sendText(global.owner[1] + '@s.whatsapp.net', `Database: ${date}`, null)
 rzki.sendMessage(global.owner[1] + '@s.whatsapp.net', {document: fs.readFileSync('./src/database/command.json'), fileName: 'command.json', mimetype: 'application/json' })
 rzki.sendMessage(global.owner[1] + '@s.whatsapp.net', {document: fs.readFileSync('./src/database/balance.json'), fileName: 'balance.json', mimetype: 'application/json' })
-setting.backupDB = new Date() * 1
+settingcuy.backupDB = new Date() * 1
 }
 }
 
