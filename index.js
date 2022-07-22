@@ -131,12 +131,15 @@ rzki.ev.on('groups.update', async pea => {
 
 //Welcome
 rzki.ev.on('group-participants.update', async (anu) => {
-//if (db.data.chats[m.chat].welcome) return
-if (!wlcm.includes(anu.id)) return
+if (db.data.chats[anu.id].welcome) return
+//if (!wlcm.includes(anu.id)) return
         console.log(anu)
         try {
             let metadata = await rzki.groupMetadata(anu.id)
             let participants = anu.participants
+            let text_welcome = `𝙃𝙀𝙇𝙇𝙊 +tag 𝙒𝙀𝙇𝘾𝙊𝙈𝙀 𝙏𝙊 +grup`
+            let text_left = `𝙎𝘼𝙔𝙊𝙉𝘼𝙍𝘼 +tag`
+            let groupSet = global.db.chats[anu.id]
             for (let num of participants) {
                 // Get Profile Picture User
                 try {
@@ -192,10 +195,13 @@ textwel = `𝙃𝙀𝙇𝙇𝙊 _*@${num.split("@")[0]}*_\n𝙒𝙀𝙇𝘾𝙊�
 } else if (db.data.chats[m.chat].SetWelkam3) {      
 textwel = `𝙒𝙀𝙇𝘾𝙊𝙈𝙀  _*@${num.split("@")[0]}*_ `
 }
+
+      let txt = (groupSet.text_welcome != '' ? groupSet.text_welcome : text_welcome).replace('+tag', `@${num.split("@")[0]}`).replace('+grup', `${metadata.subject}`)
                        var but = [{buttonId: `/`, buttonText: { displayText: "Welcome 🥳" }, type: 1 }]
-				rzki.sendMessage(anu.id, { caption: textwel, image: {url: ppuser}, buttons: but, footer: `‎`, mentions: [num]})
+				rzki.sendMessage(anu.id, { caption: txt, image: {url: ppuser}, buttons: but, footer: `‎`, mentions: [num]})
                 } else if (anu.action == 'remove') {
-                if (!left.includes(anu.id)) return
+                //if (!left.includes(anu.id)) return
+                  if (db.data.chats[anu.id].left) return
 if (db.data.chats[m.chat].SetLeft1) {                                           
 textleft = `𝘽𝙔𝙀𝙀`
 } else if (db.data.chats[m.chat].SetLeft2) {  
@@ -203,9 +209,10 @@ textleft = `𝙎𝘼𝙔𝙊𝙉𝘼𝙍𝘼`
 } else if (db.data.chats[m.chat].SetLeft3) {  
 textleft = `𝙇𝙀𝘼𝙑𝙄𝙉𝙂 𝙏𝙊 _*${metadata.subject}*_`
 }
+       let txt = (groupSet.text_left != '' ? groupSet.text_left : text_left).replace('+tag', `@${num.split("@")[0]}`).replace('+grup', `${metadata.subject}`)
                    // rzki.sendMessage(anu.id, { image: { url: ppuser }, contextInfo: { mentionedJid: [num] }, caption: `@${num.split("@")[0]} Leaving To ${metadata.subject}` })
                      var but = [{buttonId: `/`, buttonText: { displayText: "Good Bye 👋" }, type: 1 }]
-				rzki.sendMessage(anu.id, { caption: textleft, image: {url: ppuser}, buttons: but, footer: `‎`, mentions: [num]})
+				rzki.sendMessage(anu.id, { caption: txt, image: {url: ppuser}, buttons: but, footer: `‎`, mentions: [num]})
                 }
             }
         } catch (err) {
