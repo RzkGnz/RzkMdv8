@@ -42,12 +42,12 @@ global.mess = {
 global.gamewaktu = 90,
 global.limitCount = 20,
 global.gcounto = {
-	"prem": 100000000000,
+	"prem": "Infinity",
 	"user": 30
 }
 global.limitawal = {
-    rakyat: "Infinity",
-    free: 100
+    prem: "Infinity",
+    free: 30
 }
 
 let file = require.resolve(__filename)

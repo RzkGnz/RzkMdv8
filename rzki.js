@@ -422,16 +422,18 @@ var imagerandom = ['https://telegra.ph/file/2787459fb330773d728ef.jpg', 'https:/
 
 try {
 let isNumber = x => typeof x === 'number' && !isNaN(x)
-let limitUser = isRakyat ? global.limitawal.rakyat : global.limitawal.free
+let limitUser = isPremium ? global.limitawal.prem : global.limitawal.free
 let user = global.db.data.users[m.sender]
 if (typeof user !== 'object') global.db.data.users[m.sender] = {}
 if (user) {
 if (!isNumber(user.afkTime)) user.afkTime = -1
 if (!('afkReason' in user)) user.afkReason = ''
+if (!('premium' in user)) user.premium = false
 if (!isNumber(user.limit)) user.limit = limitUser
 } else global.db.data.users[m.sender] = {
 afkTime: -1,
 afkReason: '',
+premium: false,
 limit: limitUser,
 }
 } catch (err) {
@@ -613,6 +615,26 @@ if (!isRakyat) {
 rkyt.push(m.sender.split("@")[0])
 }
 
+let users = global.db.data.users[m.sender]
+if (budy.includes(command)) {
+            users.hit += 1
+            users.usebot = new Date() * 1
+            if (!global.db.data.stats[command]) {
+               global.db.data.stats[command] = {
+                  hitstat: 1,
+                  today: 1,
+                  lasthit: new Date * 1,
+                  sender: m.sender.split`@` [0]
+               }
+            } else {
+               if (!/bot|help|menu|stat|hitstat|dash/.test(command)) {
+                  global.db.data.stats[command].hitstat += 1
+                  global.db.data.stats[command].today += 1
+                  global.db.data.stats[command].lasthit = new Date * 1
+                  global.db.data.stats[command].sender = m.sender.split`@` [0]
+               }
+            }
+         }
 // AFK
 let mentionUser = [...new Set([...(m.mentionedJid || []), ...(m.quoted ? [m.quoted.sender] : [])])]
 for (let jid of mentionUser) {
@@ -871,7 +893,7 @@ fs.writeFileSync('./src/database.json', JSON.stringify(global.db.data, null, 2))
 let cron = require('node-cron')
 cron.schedule('00 12 * * *', () => {
 let user = Object.keys(global.db.data.users)
-let limitUser = isRakyat ? global.limitawal.rakyat : global.limitawal.free
+let limitUser = isPremium ? global.limitawal.prem : global.limitawal.free
 for (let jid of user) global.db.data.users[jid].limit = limitUser
 console.log('Reseted Limit')
 }, {
