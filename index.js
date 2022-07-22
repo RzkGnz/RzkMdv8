@@ -131,8 +131,8 @@ rzki.ev.on('groups.update', async pea => {
 
 //Welcome
 rzki.ev.on('group-participants.update', async (anu) => {
-if (db.data.chats[anu.id].welcome) return
-//if (!wlcm.includes(anu.id)) return
+//if (db.data.chats[anu.id].welcome) return
+if (!wlcm.includes(anu.id)) return
         console.log(anu)
         try {
             let metadata = await rzki.groupMetadata(anu.id)
@@ -200,8 +200,8 @@ textwel = `𝙒𝙀𝙇𝘾𝙊𝙈𝙀  _*@${num.split("@")[0]}*_ `
                        var but = [{buttonId: `/`, buttonText: { displayText: "Welcome 🥳" }, type: 1 }]
 				rzki.sendMessage(anu.id, { caption: textwel, image: {url: ppuser}, buttons: but, footer: `‎`, mentions: [num]})
                 } else if (anu.action == 'remove') {
-                //if (!left.includes(anu.id)) return
-                  if (db.data.chats[anu.id].left) return
+                if (!left.includes(anu.id)) return
+                  //if (db.data.chats[anu.id].left) return
 if (db.data.chats[m.chat].SetLeft1) {                                           
 textleft = `𝘽𝙔𝙀𝙀`
 } else if (db.data.chats[m.chat].SetLeft2) {  
