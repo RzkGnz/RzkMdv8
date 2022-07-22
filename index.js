@@ -139,7 +139,7 @@ if (db.data.chats[anu.id].welcome) return
             let participants = anu.participants
             let text_welcome = `𝙃𝙀𝙇𝙇𝙊 +tag 𝙒𝙀𝙇𝘾𝙊𝙈𝙀 𝙏𝙊 +grup`
             let text_left = `𝙎𝘼𝙔𝙊𝙉𝘼𝙍𝘼 +tag`
-            let groupSet = global.db.chats[anu.id]
+            let groupSet = global.db.data.chats[anu.id]
             for (let num of participants) {
                 // Get Profile Picture User
                 try {
