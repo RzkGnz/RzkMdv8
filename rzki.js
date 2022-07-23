@@ -200,8 +200,8 @@ const isBotAdmins = m.isGroup ? groupAdmins.includes(botNumber) : false
 const isAdmins = m.isGroup ? groupAdmins.includes(m.sender) : false
 const isAutoSticker = m.isGroup ? autosticker.includes(from) : false
 const isSewa = _sewa.checkSewaGroup(from, sewa)
-//const isPremium = isCreator ? true : _prem.checkPremiumUser(sender, premium)
-const isPremium = isCreator ? true : global.db.data.users[sender].premium
+const isPremium = isCreator ? true : _prem.checkPremiumUser(sender, premium)
+//const isPremium = isCreator ? true : global.db.data.users[sender].premium
 const gcounti = global.gcounto
 const gcount = isPremium ? gcounti.prem : gcounti.user
 
@@ -2160,16 +2160,16 @@ case prefix+'cekprem':
 case prefix+'addprem':{
                 if (!isCreator) return reply(mess.owner)
                 if (args2.length < 2) return reply(`Penggunaan :\n*${prefix}addprem* @tag waktu\n*${prefix}addprem* nomor waktu\n\nContoh : ${command} @tag 30d`)
-               // if (!args2[2]) return reply(`Mau yang berapa hari?`)
+                if (!args2[2]) return reply(`Mau yang berapa hari?`)
                 if (mentionUser.length !== 0) {
-                    //_prem.addPremiumUser(mentionUser[0], args2[2], premium)
-                    global.db.data.users[mentionUser[0]].premium = true
+                    _prem.addPremiumUser(mentionUser[0], args2[2], premium)
+                   // global.db.data.users[mentionUser[0]].premium = true
                     reply('Sukses')
                 } else {
                  var cekap = await rzki.onWhatsApp(args2[1]+"@s.whatsapp.net")
                  if (cekap.length == 0) return reply(`Masukkan nomer yang valid/terdaftar di WhatsApp`)
-                   // _prem.addPremiumUser(args2[1] + '@s.whatsapp.net', args2[2], premium)
-                   global.db.data.users[args2[1] + '@s.whatsapp.net'].premium = true
+                    _prem.addPremiumUser(args2[1] + '@s.whatsapp.net', args2[2], premium)
+                  // global.db.data.users[args2[1] + '@s.whatsapp.net'].premium = true
                     reply('Sukses')
                 }
                 }
@@ -2187,16 +2187,16 @@ reply('Sukses')
                 if (!isCreator) return reply(mess.owner)
                 if (args2.length < 2) return reply(`Penggunaan :\n*${prefix}delprem* @tag\n*${prefix}delprem* nomor`)
                 if (mentionUser.length !== 0){
-                    /*premium.splice(_prem.getPremiumPosition(mentionUser[0], premium), 1)
-                    fs.writeFileSync('./src/premium.json', JSON.stringify(premium))*/
-                    global.db.data.users[mentionUser[0]].premium = false
+                    premium.splice(_prem.getPremiumPosition(mentionUser[0], premium), 1)
+                    fs.writeFileSync('./src/premium.json', JSON.stringify(premium))
+                    //global.db.data.users[mentionUser[0]].premium = false
                     reply('Sukses!')
                 } else {
                  var cekpr = await rzki.oWhatsApp(args2[1]+"@s.whatsapp.net")
                  if (cekpr.length == 0) return reply(`Masukkan nomer yang valid/terdaftar di WhatsApp`)
-                   /* premium.splice(_prem.getPremiumPosition(args2[1] + '@s.whatsapp.net', premium), 1)
-                    fs.writeFileSync('./src/premium.json', JSON.stringify(premium))*/
-                    global.db.data.users[args2[1] + '@s.whatsapp.net'].premium = false
+                    premium.splice(_prem.getPremiumPosition(args2[1] + '@s.whatsapp.net', premium), 1)
+                    fs.writeFileSync('./src/premium.json', JSON.stringify(premium))
+                   // global.db.data.users[args2[1] + '@s.whatsapp.net'].premium = false
                     reply('Sukses!')
                 }
                 break
@@ -2641,15 +2641,11 @@ let usersLimit = sortedLimit.map(v => v[0])
 //let usersLim = sortedLim.map(v => v[0])
 let usersmoney = sortedmoney.map(v => v[0])
 let len = args[0] && args[0].length > 0 ? Math.min(100, Math.max(parseInt(args[0]), 5)) : Math.min(20, sortedLimit.length)
-let rpgt = `❏  *T O P - B A L A N C E*
+let txt = `❏  *T O P - B A L A N C E*
 
 ${sortedmoney.slice(0, len).map(([user, data], i) => (i + 1) + '. @' + user.split`@`[0] + '\n   Saldo :' + data.Money + ' ').join`\n`}
 `.trim()
-rzki.sendText(from, rpgt, m, {
-contextInfo: {
-mentions: parseMention(rpgt)
-}
-})
+rzki.sendText(from, txt, m, { mentions: parseMention(txt) })
 } catch (err) {
 console.log(err)
 }
@@ -6265,7 +6261,7 @@ case prefix+'toimage': case prefix+'toimg': {
 if (q.includes('-help')) return m.reply(examplyme) 
 if (isBan) return m.reply(mess.ban)
 if (!m.quoted) return m.reply('Reply Image')
-if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 if (!/webp/.test(mime)) return m.reply(`balas stiker dengan caption *${prefix + command.slice(1)}*`)
 reply(mess.wait)
 let media = await rzki.downloadAndSaveMediaMessage(quoted)
@@ -6286,7 +6282,7 @@ case prefix+'tomp4': case prefix+'tovideo': {
 if (isBan) return m.reply(mess.ban)
 if (!m.quoted) return m.reply('Reply Image')
 if (!/webp/.test(mime)) return m.reply(`balas stiker dengan caption *${prefix + command.slice(1)}*`)
-if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 reply(mess.wait)
 let { webp2mp4File } = require('./lib/uploader')
 let media = await rzki.downloadAndSaveMediaMessage(quoted)
@@ -6301,7 +6297,7 @@ case prefix+'toaud': case prefix+'toaudio': {
 if (isBan) return m.reply(mess.ban)
 if (!/video/.test(mime) && !/audio/.test(mime)) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command.slice(1)}`)
 if (!m.quoted) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command.slice(1)}`)
-if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 reply(mess.wait)
 let media = await quoted.download()
 let { toAudio } = require('./lib/converter')
@@ -6316,7 +6312,7 @@ if (isBan) return m.reply(mess.ban)
 if (/document/.test(mime)) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan MP3 Dengan Caption ${prefix + command.slice(1)}`)
 if (!/video/.test(mime) && !/audio/.test(mime)) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan MP3 Dengan Caption ${prefix + command.slice(1)}`)
 if (!m.quoted) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan MP3 Dengan Caption ${prefix + command.slice(1)}`)
-if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 reply(mess.wait)
 let media = await quoted.download()
 let { toAudio } = require('./lib/converter')
@@ -6352,7 +6348,7 @@ await fs.unlinkSync(media)
 break
 case prefix+'tourl': {
 if (isBan) return m.reply(mess.ban)
-if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 reply(mess.wait)
 let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
 let media = await rzki.downloadAndSaveMediaMessage(quoted)
@@ -6370,7 +6366,7 @@ await fs.unlinkSync(media)
 break
 case prefix+'q': case prefix+'quoted': {
 if (isBan) return m.reply(mess.ban)
-if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 if (!m.quoted) return m.reply('Reply Pesannya!!')
 let wokwol = await rzki.serializeM(await m.getQuotedObj())
 if (!wokwol.quoted) return m.reply('Pesan Yang anda reply tidak mengandung reply')
@@ -6444,7 +6440,7 @@ break
 case prefix+'gimage': case prefix+'gig': {
 if (isBan) return m.reply(mess.ban)
 if (!args[0]) return m.reply("Mau cari gambar apa kak?")
-if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 reply(mess.wait)
 let gis = require('g-i-s')
 gis(args.join(" "), async (error, result) => {
@@ -6652,7 +6648,7 @@ m.reply(String(err))
 addCountCmd('#ig', sender, _cmd)
 break*/
 case prefix+'igdl': case prefix+'instagram': case prefix+'ig':
-			    if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+			    if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 				if (args2.length < 2) return reply(`Kirim perintah ${command} link`)
 			    if (!isUrl(args2[1])) return reply('Link Invalid')
 			    if (!args2[1].includes('instagram.com')) return reply('Link Invalid')
@@ -6888,7 +6884,7 @@ break
 case prefix+'play3': case prefix+'ytplay3': {
 if (q.includes('-help')) return m.reply(examquery) 
                 if (!text) m.reply(`Example : ${prefix + command.slice(1)} bts boy with luv`)
-                if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+                if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
                 reply(mess.wait)
                 let url = await yts(text)
                 let anu = url.videos[0]
@@ -6933,7 +6929,7 @@ case prefix+'play': case prefix+'musik': case prefix+'ytplay': {
 	    if (q.includes('-help')) return m.reply(examlink) 
                 let { yta } = require('./lib/y2mate')
                                 if (!text) m.reply(`Example : ${prefix + command.slice(1)} bts boy with luv`)
-                if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+                if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
                 let url = await yts(text)
                 let anu = url.videos[0]
                 let media = await yta(anu.url, '128kbps')
@@ -6951,7 +6947,7 @@ case prefix+'video': {
             if (q.includes('-help')) return m.reply(examlink) 
                 let { ytv } = require('./lib/y2mate')
                 if (!text) m.reply(`Example : ${prefix + command.slice(1)} bts boy with luv`)
-                if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+                if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
                 let url = await yts(text)
                 let anu = url.videos[0]
                 let media = await ytv(anu.url, '360p')
@@ -6967,7 +6963,7 @@ case prefix+'videohd': {
             if (q.includes('-help')) return m.reply(examlink) 
                 let { ytv } = require('./lib/y2mate')
                 if (!text) m.reply(`Example : ${prefix + command.slice(1)} bts boy with luv`)
-                if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+                if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
                 let url = await yts(text)
                 let anu = url.videos[0]
                 let media = await ytv(anu.url, '720p')
@@ -6983,7 +6979,7 @@ case prefix+'videohd': {
 	    if (q.includes('-help')) return m.reply(examlink) 
                 let { yta } = require('./lib/y2mate')
                 if (!text) reply(`Example : ${prefix + command.slice(1)} https://youtube.com/watch?v=PtFMh6Tccag%27 320kbps`)
-                if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+                if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
                 let quality = args[1] ? args[1] : '128kbps'
                 let media = await yta(text, quality)
                 reply(mess.wait)
@@ -7000,7 +6996,7 @@ case prefix+'videohd': {
             if (q.includes('-help')) return m.reply(examlink) 
                 let { ytv } = require('./lib/y2mate')
                 if (!text) reply(`Example : ${prefix + command.slice(1)} https://youtube.com/watch?v=PtFMh6Tccag%27 360p`)
-                if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+                if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
                 let quality = args[1] ? args[1] : '360p'
                 let media = await ytv(text, quality)
                 reply(mess.wait)
@@ -7056,7 +7052,7 @@ case prefix+'ytmp42': case prefix+'ytmp32': case prefix+'ytdl': case prefix+'you
 if (q.includes('-help')) return m.reply(examlink) 
 if (isBan) return m.reply(mess.ban)
 if (!args[0]) return m.reply(mess.linkm)
-if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 reply(mess.wait)
 try {
 hx.youtube(args[0]).then(async(res) => {
@@ -7189,7 +7185,7 @@ case prefix+'smeme': case prefix+'smm': {
 if (q.includes('-help')) return m.reply(examplyme) 
 if (isBan) return m.reply(mess.ban)
 if (!args.join(" ")) return m.reply("Masukan Textnya!")
-if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 if (/image/.test(mime)) {
 var media = await rzki.downloadAndSaveMediaMessage(quoted, "smeme")
 imgbbUploader('fb39bda7f29404349f9ea07e48cecf4d', media)
@@ -7229,7 +7225,7 @@ break*/
 case prefix+'stiker':  case prefix+'sticker': case prefix+'s': {
 if (q.includes('-help')) return m.reply(examplyme) 
 if (isBan) return m.reply(mess.ban)
-if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 if (/image/.test(mime)) {
 let media = await quoted.download()
 let encmedia = await rzki.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.packname2 })
@@ -7263,7 +7259,7 @@ rzki.sendMessage(from, {document:{url:`${rescun[0].link}`}, mimetype: `applicati
 break
 case prefix+'emojimix': {
 	        if (!text) reply(`Example : ${prefix + command.slice(1)} 😅+🤔`)
-	        if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+	        if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 		let [emoji1, emoji2] = text.split`+`
 		let anu = await fetchJson(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${encodeURIComponent(emoji1)}_${encodeURIComponent(emoji2)}`)
 		for (let res of anu.results) {
@@ -7279,7 +7275,7 @@ case prefix+'emojimix': {
 case prefix+'emojimix2': {
 if (isBan) return reply(mess.ban)
 if (!args.join(" ")) return reply(`Example : ${command} 😅`)
-if (global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
+if (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 try {
 let anu = await fetchJson(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${encodeURIComponent(text)}`)
 for (let res of anu.results) {
