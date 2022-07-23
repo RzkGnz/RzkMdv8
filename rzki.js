@@ -558,12 +558,16 @@ if (db.data.settings[botNumber].selff) { if (!isCreator && m.isGroup) return
 }
 
 if (!isCmd && !m.isGroup) { 
+ var htgm = randomNomor(50, 100)
+db.data.users[m.sender].Money += randomNomor(htgm)
 if (db.data.settings[botNumber].publicc) { if (!isCreator && !m.isGroup) return
 }
 if (db.data.settings[botNumber].selff) { if (!isCreator && !m.isGroup) return
 }
 }
 if (!isCmd && m.isGroup) { 
+ var htgm = randomNomor(50, 100)
+db.data.users[m.sender].Money += randomNomor(htgm)
 if (db.data.settings[botNumber].publicc) { if (!isCreator && m.isGroup) return
 }
 if (db.data.settings[botNumber].selff) { if (!isCreator && m.isGroup) return
@@ -988,7 +992,8 @@ if (isWin || isSurender) delete _family100['family100'+m.chat]
 		    var kode = randomNomor(1000000000, 9000000000)
 		    var htgm = randomNomor(70000, 50000)
 			addBalance(sender, htgm, balance)
-		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tebakgambar2)}\nHadiah : ${htgm} balance\nKode Game : ${kode}\n\nIngin bermain lagi? Pencet Tombol Dibawah`
+			db.data.users[m.sender].Money += htgm
+		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tebakgambar2)}\nHadiah : $${toCommas2(htgm)} balance\nKode Game : ${kode}\n\nIngin bermain lagi? Pencet Tombol Dibawah`
 			var tebakgmbr = [
 			{ quickReplyButton: { displayText: `Main Lagi`, id: `${prefix}tebakgambar` } },
 		]
@@ -1002,8 +1007,9 @@ if (isWin || isSurender) delete _family100['family100'+m.chat]
 		  if (chath.toLowerCase() == getJawabanGame(from, kuiscuy)) {
 		    var htgm = randomNomor(70000, 50000)
 			addBalance(sender, htgm, balance)
+			db.data.users[m.sender].Money += htgm
 			var kode = randomNomor(1000000000, 9000000000)
-		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, kuiscuy)}\nHadiah : ${htgm} balance\nKode Game : ${kode}\n\nIngin bermain lagi? Pencet Tombol Dibawah`
+		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, kuiscuy)}\nHadiah : $${toCommas2(htgm)} balance\nKode Game : ${kode}\n\nIngin bermain lagi? Pencet Tombol Dibawah`
 			var kus = [
 			{ quickReplyButton: { displayText: `Main Lagi`, id: `${prefix}tebakkata` } },
 		]
@@ -1018,7 +1024,8 @@ if (isWin || isSurender) delete _family100['family100'+m.chat]
 		    var kode = randomNomor(1000000000, 9000000000)
 		    var htgm = randomNomor(70000, 50000)
 			addBalance(sender, htgm, balance)
-		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tekateki)}\nHadiah : ${htgm} balance\nKode Game : ${kode}\n\nIngin bermain lagi? Pencet Tombol Dibawah`
+			db.data.users[m.sender].Money += htgm
+		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tekateki)}\nHadiah : $${toCommas2(htgm)} balance\nKode Game : ${kode}\n\nIngin bermain lagi? Pencet Tombol Dibawah`
 			var kus = [
 			{ quickReplyButton: { displayText: `Main Lagi`, id: `${prefix}tekateki` } },
 		]
@@ -1031,8 +1038,9 @@ if (isWin || isSurender) delete _family100['family100'+m.chat]
 		if (isPlayGame(from, tebakkimia) && isUser) {
 		  if (chath.toLowerCase() == getJawabanGame(from, tebakkimia)) {
 		    var htgm = randomNomor(70000, 50000)
+		    db.data.users[m.sender].Money += htgm
 			addBalance(sender, htgm, balance)
-		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tebakkimia)}\nHadiah : ${htgm} balance\n\nIngin bermain lagi? Pencet Tombol Dibawah`
+		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tebakkimia)}\nHadiah : $${toCommas2(htgm)} balance\n\nIngin bermain lagi? Pencet Tombol Dibawah`
 			var kus = [
 			{ quickReplyButton: { displayText: `Main Lagi`, id: `${prefix}tebakkimia` } },
 		]
@@ -1046,7 +1054,8 @@ if (isWin || isSurender) delete _family100['family100'+m.chat]
 		  if (chath.toLowerCase() == getJawabanGame(from, tebaktebakan2)) {
 		    var htgm = randomNomor(70000, 50000)
 			addBalance(sender, htgm, balance)
-		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tebaktebakan2)}\nHadiah : ${htgm} balance\n\nIngin bermain lagi? Pencet Tombol Dibawah`
+			db.data.users[m.sender].Money += htgm
+		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tebaktebakan2)}\nHadiah : $${toCommas2(htgm)} balance\n\nIngin bermain lagi? Pencet Tombol Dibawah`
 			var kus = [
 			{ quickReplyButton: { displayText: `Main Lagi`, id: `${prefix}kuis` } },
 		]
@@ -2467,9 +2476,9 @@ case prefix+'cekme':
   
 	›  *Name :* ${pushname}
 	›  *Status :* ${isCreator ? 'Owner' : isPremium ? 'Premium' : 'Gratisan'}
-	›  *Limit :* ${isCreator ? 'Unlimited' : isPremium ? 'Unlimited' : getLimit(sender, limitCount, limit)}
-	›  *Limit Game :* ${isCreator ? 'Unlimited' : cekGLimit(sender, gcount, glimit)}
-	›  *Balance :* $${toCommas(getBalance(sender, balance))}
+	›  *Limit :* ${isCreator ? 'Unlimited' : isPremium ? 'Unlimited' : db.data.users[sender].limit}
+	›  *Limit Game :* ${isCreator ? 'Unlimited' : db.data.users[sender].limitGame}
+	›  *Balance :* $${toCommas(db.data.users[sender].Money)}
   
 ❏   *Y O U R - P R O F I L E*
  
@@ -2643,7 +2652,7 @@ let usersmoney = sortedmoney.map(v => v[0])
 let len = args[0] && args[0].length > 0 ? Math.min(100, Math.max(parseInt(args[0]), 5)) : Math.min(20, sortedLimit.length)
 let txt = `❏  *T O P - B A L A N C E*
 
-${sortedmoney.slice(0, len).map(([user, data], i) => (i + 1) + '. @' + user.split`@`[0] + '\n   Saldo :' + data.Money + ' ').join`\n`}
+${sortedmoney.slice(0, len).map(([user, data], i) => (i + 1) + '. @' + user.split`@`[0] + '\n   Saldo : $' + toCommas2(data.Money) + ' ').join`\n`}
 `.trim()
 rzki.sendText(from, txt, m, { mentions: parseMention(txt) })
 } catch (err) {
@@ -2656,10 +2665,10 @@ break
                 if (isNaN(args2[1])) return reply(`Harus berupa angka`)
                 if (args2[1].toLowerCase() === 'infinity') return reply(`Yahaha saya ndak bisa di tipu`)
                 let ane = Number(parseInt(args2[1]) * 15000)
-                if (getBalance(sender, balance) < ane) return reply(`Balance kamu tidak mencukupi untuk pembelian ini`)
-                kurangBalance(sender, ane, balance)
-                giveLimit(sender, parseInt(args2[1]), limit)
-                reply(monospace(`Pembeliaan limit sebanyak ${args2[1]} berhasil\n\nSisa Balance : $${toCommas(getBalance(sender, balance))}\nSisa Limit : ${getLimit(sender, limitCount, limit)}/${limitCount}`))
+                if (db.data.users[m.sender].Money < ane) return reply(`Balance kamu tidak mencukupi untuk pembelian ini`)
+                db.data.users[m.sender].Money -= ane
+                db.data.users[m.sender].limit += parseInt(args2[1])
+                reply(monospace(`Pembeliaan limit sebanyak ${args2[1]} berhasil\n\nSisa Balance : $${toCommas(db.data.users[sender].Money))}\nSisa Limit : ${db.data.users[sender].limit}`))
             }
                 break
 			case prefix+'transfer':
@@ -2670,15 +2679,17 @@ break
                  if (isNaN(args2[2])) return reply(`Nominal harus berupa angka!`)
                  if (args2[2].toLowerCase() === 'infinity') return reply(`Yahaha saya ndak bisa di tipu`)
                  if (args2[2].includes("-")) return reply(`Jangan menggunakan -`)
-                 var anu = getBalance(sender, balance)
-                 if (anu < args2[2] || anu == 'undefined') return reply(`Balance Kamu Tidak Mencukupi Untuk Transfer Sebesar $${args2[2]}, Kumpulkan Terlebih Dahulu\nKetik ${prefix}balance, untuk mengecek Balance mu!`)
+                 var anu = db.data.users[m.sender].Money
+                 if (anu < args2[2] || anu == '0') return reply(`Balance Kamu Tidak Mencukupi Untuk Transfer Sebesar $${toCommas(args2[2])}, Kumpulkan Terlebih Dahulu\nKetik ${prefix}balance, untuk mengecek Balance mu!`)
+                 let ane = Number(parseInt(args2[2]) * 10000)
+                if (db.data.users[m.sender].Money < ane) return reply(bold(`Minimal 10.000`))
                  var htgm = randomNomor(1000, 2500)
-                 kurangBalance(sender, parseInt(args2[2]), balance)
-                 kurangBalance(sender, htgm, balance)
-                 addBalance(mentionUser[0], parseInt(args2[2]), balance)
+                 db.data.users[m.sender].Money -= ane
+                 db.data.users[m.sender].Money -= htgm
+                 db.data.users[mentionUser[0]].Money += parseInt(args2[2])
                   let txt = `❏  *T R A N S F E R*
 
-“Berhasil melakukan transfer kepada *⁨@${mentionUser[0].split("@")[0]}* dengan nominal _$${args2[2]}_”
+“Berhasil melakukan transfer kepada *⁨@${mentionUser[0].split("@")[0]}* dengan nominal _$${toCommas(args2[2])}_”
 
 🛒 *Pajak* : $${toCommas(htgm)}
 💸 *Sisa Saldo* : $${toCommas(getBalance(sender, balance))}`
@@ -2693,9 +2704,9 @@ rzki.sendText(from, txt, m, { mentions: parseMention(txt) })
                 if (args2[1].toLowerCase() === 'infinity') return reply(`Yahaha saya ndak bisa di tipu`)
                 let ane = Number(parseInt(args2[1]) * 15000)
                 if (getBalance(sender, balance) < ane) return reply(`Balance kamu tidak mencukupi untuk pembelian ini`)
-                kurangBalance(sender, ane, balance)
-                givegame(sender, parseInt(args2[1]), glimit)
-                reply(monospace(`Pembeliaan game limit sebanyak ${args2[1]} berhasil\n\nSisa Balance : $${toCommas(getBalance(sender, balance))}\nSisa Game Limit : ${cekGLimit(sender, gcount, glimit)}/${gcount}`))
+                db.data.users[sender].Money -= ane
+                db.data.users[sender].limitGame += parseInt(args2[1])
+                reply(monospace(`Pembeliaan game limit sebanyak ${args2[1]} berhasil\n\nSisa Balance : $${toCommas(db.data.users[sender].Money)}\nSisa Game Limit : ${db.data.users[sender].limitGame}`))
             }
                 break
 			case prefix+'limit': case prefix+'balance':
@@ -2704,11 +2715,11 @@ rzki.sendText(from, txt, m, { mentions: parseMention(txt) })
 					var Ystatus = owner.includes(mentionUser[0])
 					var isPrim = Ystatus ? true : _prem.checkPremiumUser(mentionUser[0], premium)
 				    var ggcount = isPrim ? gcounti.prem : gcounti.user
-                    var limitMen = `${getLimit(mentionUser[0], limitCount, limit)}`
-                    textImg(`❏  *I N F O - U S E R*\n\nLimit : ${_prem.checkPremiumUser(mentionUser[0], premium) ? 'Unlimited' : limitMen}/${limitCount}\nLimit Game : ${cekGLimit(mentionUser[0], ggcount, glimit)}/${ggcount}\nBalance : $${toCommas(getBalance(mentionUser[0], balance))}\n\nKamu dapat membeli limit dengan ${prefix}buylimit dan ${prefix}buyglimit untuk membeli game limit`)
+                    var limitMen = `${db.data.users[mentionUser[0]].limit}`
+                    textImg(`❏  *I N F O - U S E R*\n\nLimit : ${_prem.checkPremiumUser(mentionUser[0], premium) ? 'Unlimited' : limitMen}\nLimit Game : ${db.data.users[mentionUser[0]].limitGame}\nBalance : $${toCommas(db.data.users[mentionUser[0]].Money)}\n\nKamu dapat membeli limit dengan ${prefix}buylimit dan ${prefix}buyglimit untuk membeli game limit`)
                 } else {
-                    var limitPrib = `${getLimit(sender, limitCount, limit)}/${limitCount}`
-                    textImg(`❏  *I N F O - U S E R*\n\nLimit : ${isPremium ? 'Unlimited' : limitPrib}\nLimit Game : ${cekGLimit(sender, gcount, glimit)}/${gcount}\nBalance : $${toCommas(getBalance(sender, balance))}\n\nKamu dapat membeli limit dengan ${prefix}buylimit dan ${prefix}buyglimit untuk membeli game limit`)
+                    var limitPrib = `${db.data.users[sender].limit}`
+                    textImg(`❏  *I N F O - U S E R*\n\nLimit : ${isPremium ? 'Unlimited' : limitPrib}\nLimit Game : ${db.data.users[sender].limitGame}\nBalance : $${toCommas(   db.data.users[sender].Money)}\n\nKamu dapat membeli limit dengan ${prefix}buylimit dan ${prefix}buyglimit untuk membeli game limit`)
                 }
 				break
 //hooh
@@ -4330,7 +4341,7 @@ addCountCmd('#tebak', sender, _cmd)
 break
 //tambahan
 	case prefix+'tebakgambar':{
-		        if (isGame(sender, isCreator, gcount, glimit)) return reply(`Limit game kamu sudah habis`)
+		        if (global.db.data.users[sender].limitGame < 1) return reply(`Limit game kamu sudah habis`)
 			    if (isPlayGame(from, tebakgambar2)) return reply(from, `Masih ada game yang belum diselesaikan`, tebakgambar2[getGamePosi(from, tebakgambar2)].msg)
 				var tg = JSON.parse(fs.readFileSync('./lib/Result/tebakgambar.json'))
 				var data = pickRandom(tg)
@@ -4340,12 +4351,12 @@ break
 				  .then( res => {
 					var jawab = data.jawaban.toLowerCase()
 					addPlayGame(from, 'TEBAK KATA', jawab, gamewaktu, res, tebakgambar2)
-					gameAdd(sender, glimit)
+					db.data.users[sender].limitGame -= 1
 				  })
 				  }
 			    break
 case prefix+'tebakkata':{
-		        if (isGame(sender, isCreator, gcount, glimit)) return reply(`Limit game kamu sudah habis`)
+		        if (global.db.data.users[sender].limitGame < 1) return reply(`Limit game kamu sudah habis`)
 			    if (isPlayGame(from, kuiscuy)) return reply(from, `Masih ada game yang belum diselesaikan`, kuiscuy[getGamePosi(from, kuiscuy)].msg)
 				var kuisnya = JSON.parse(fs.readFileSync('./lib/Result/tebakkata.json'))
 				const kukus = pickRandom(kuisnya)
@@ -4355,12 +4366,12 @@ case prefix+'tebakkata':{
 				  .then( res => {
 					var jawab = kukus.jawaban.toLowerCase()
 					addPlayGame(from, 'TEBAK KATA', jawab, gamewaktu, res, kuiscuy)
-					gameAdd(sender, glimit)
+					db.data.users[sender].limitGame -= 1
 				  })
 				  }
 			    break
 case prefix+'kuis':{
-		        if (isGame(sender, isCreator, gcount, glimit)) return reply(`Limit game kamu sudah habis`)
+		        if (global.db.data.users[sender].limitGame < 1) return reply(`Limit game kamu sudah habis`)
 			    if (isPlayGame(from, tebaktebakan2)) return reply(from, `Masih ada game yang belum diselesaikan`, tebaktebakan2[getGamePosi(from, tebaktebakan2)].msg)
 				var tebaknya = JSON.parse(fs.readFileSync('./lib/Result/tebaktebakan.json'))
 				var hayo = pickRandom(tebaknya)
@@ -4370,12 +4381,12 @@ case prefix+'kuis':{
 				  .then( res => {
 					var jawab = hayo.jawaban.toLowerCase()
 					addPlayGame(from, 'KUIS GAME', jawab, gamewaktu, res, tebaktebakan2)
-					gameAdd(sender, glimit)
+					db.data.users[sender].limitGame -= 1
 				  })
 				  }
 			    break
 case prefix+'tekateki':{
-		        if (isGame(sender, isCreator, gcount, glimit)) return reply(`Limit game kamu sudah habis`)
+		        if (global.db.data.users[sender].limitGame < 1) return reply(`Limit game kamu sudah habis`)
 			    if (isPlayGame(from, tekateki)) return reply(from, `Masih ada game yang belum diselesaikan`, tekateki[getGamePosi(from, tekateki)].msg)
 				var tebaknya = JSON.parse(fs.readFileSync('./lib/Result/tekateki.json'))
 				var hayo = pickRandom(tebaknya)
@@ -4385,12 +4396,12 @@ case prefix+'tekateki':{
 				  .then( res => {
 					var jawab = hayo.jawaban.toLowerCase()
 					addPlayGame(from, 'KUIS GAME', jawab, gamewaktu, res, tekateki)
-					gameAdd(sender, glimit)
+					db.data.users[sender].limitGame -= 1
 				  })
 				  }
 			    break
 case prefix+'tebakkimia':{
-		        if (isGame(sender, isCreator, gcount, glimit)) return reply(`Limit game kamu sudah habis`)
+		        if (global.db.data.users[sender].limitGame < 1) return reply(`Limit game kamu sudah habis`)
 			    if (isPlayGame(from, tebakkimia)) return reply(from, `Masih ada game yang belum diselesaikan`, tebakkimia[getGamePosi(from, tebakkimia)].msg)
 				var tebaknya = JSON.parse(fs.readFileSync('./lib/Result/tebakkimia.json'))
 				var hayo = pickRandom(tebaknya)
@@ -4400,7 +4411,7 @@ case prefix+'tebakkimia':{
 				  .then( res => {
 					var jawab = hayo.unsur.toLowerCase()
 					addPlayGame(from, 'TEBAK KIMIA', jawab, gamewaktu, res, tebakkimia)
-					gameAdd(sender, glimit)
+					db.data.users[sender].limitGame -= 1
 				  })
 				  }
 			    break

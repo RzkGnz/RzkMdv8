@@ -42,11 +42,11 @@ global.mess = {
 global.gamewaktu = 90,
 global.limitCount = 20,
 global.gcounto = {
-	"prem": "Infinity",
+	"prem": "Unlimited",
 	"user": 30
 }
 global.limitawal = {
-    prem: "Infinity",
+    prem: "Unlimited",
     free: 30
 }
 
