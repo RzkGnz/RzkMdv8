@@ -2477,7 +2477,7 @@ case prefix+'cekme':
 	›  *Name :* ${pushname}
 	›  *Status :* ${isCreator ? 'Owner' : isPremium ? 'Premium' : 'Gratisan'}
 	›  *Limit :* ${isCreator ? 'Unlimited' : isPremium ? 'Unlimited' : db.data.users[sender].limit}
-	›  *Limit Game :* ${isCreator ? 'Unlimited' : db.data.users[sender].limitGame}
+	›  *Limit Game :* ${isCreator ? 'Unlimited' : isPremium ? 'Unlimited' : db.data.users[sender].limitGame}
 	›  *Balance :* $${toCommas(db.data.users[sender].Money)}
   
 ❏   *Y O U R - P R O F I L E*
@@ -2637,26 +2637,51 @@ break
                 mentions(top, arrTop, true)
             }
                 break
-case prefix+'topbalance':
-case prefix+'leaderboard':
+case prefix+'topbalance':{
 addCountCmd('#topbalance', m.sender, _cmd)
 try {
-//require('./lib/lb.js')(args, rzki, from, m)
-//let name = m.fromMe ? zansky.user : zansky.contacts[m.sender] 
 let sortedLimit = Object.entries(global.DATABASE.data.users).sort((a, b) => b[1].limit - a[1].limit)
-//let sortedLim = Object.entries(global.DATABASE.data.users).sort((a, b) => b[1].limit - a[1].limit)
 let sortedmoney = Object.entries(global.DATABASE.data.users).sort((a, b) => b[1].Money - a[1].Money)
 let usersLimit = sortedLimit.map(v => v[0])
-//let usersLim = sortedLim.map(v => v[0])
 let usersmoney = sortedmoney.map(v => v[0])
-let len = args[0] && args[0].length > 0 ? Math.min(100, Math.max(parseInt(args[0]), 5)) : Math.min(20, sortedLimit.length)
+let len = args[0] && args[0].length > 0 ? Math.min(10, Math.max(parseInt(args[0]), 5)) : Math.min(10, sortedLimit.length)
 let txt = `❏  *T O P - B A L A N C E*
 
-${sortedmoney.slice(0, len).map(([user, data], i) => (i + 1) + '. @' + user.split`@`[0] + '\n   Saldo : $' + toCommas2(data.Money) + ' ').join`\n`}
+${sortedmoney.slice(0, len).map(([user, data], i) => (i + 1) + '. @' + user.split`@`[0] + '\n   *Saldo : $' + toCommas2(data.Money) + '* ').join`\n`}
+
+*𝚂𝚒𝚖𝚙𝚕𝚎 𝚠𝚑𝚊𝚝𝚜𝚊𝚙𝚙 𝙱𝙾𝚃 [ 𝙼𝙳 ]*
 `.trim()
 rzki.sendText(from, txt, m, { mentions: parseMention(txt) })
 } catch (err) {
 console.log(err)
+}
+}
+break
+case prefix+'topglobal':
+case prefix+'leaderboard':{
+addCountCmd('#topglobal', m.sender, _cmd)
+try {
+let sortedLimit = Object.entries(global.DATABASE.data.users).sort((a, b) => b[1].limit - a[1].limit)
+let sortedmoney = Object.entries(global.DATABASE.data.users).sort((a, b) => b[1].Money - a[1].Money)
+let usersLimit = sortedLimit.map(v => v[0])
+let usersmoney = sortedmoney.map(v => v[0])
+let len = args[0] && args[0].length > 0 ? Math.min(10, Math.max(parseInt(args[0]), 5)) : Math.min(10, sortedLimit.length)
+let rpgt = `❏  *T O P - G L O B A L*
+
+“Saldo Anda di peringkat *${usersmoney.indexOf(m.sender) + 1}* dari *${usersmoney.length}* anggota ${groupMetadata.subject}”
+
+${sortedmoney.slice(0, len).map(([user, data], i) => (i + 1) + '. @' + user.split`@`[0] + '\n   *Uang  : ' + data.Money + '* ').join`\n`}
+
+“Limit Anda di peringkat *${usersLimit.indexOf(m.sender) + 1}* dari *${usersLimit.length}* anggota ${groupMetadata.subject}”
+
+${sortedLimit.slice(0, len).map(([user, data], i) => (i + 1) + '. @' + user.split`@`[0] + '\n   *🧱  : ' + data.limit + '* ').join`\n`}
+
+*𝚂𝚒𝚖𝚙𝚕𝚎 𝚠𝚑𝚊𝚝𝚜𝚊𝚙𝚙 𝙱𝙾𝚃 [ 𝙼𝙳 ]*
+`.trim()
+rzki.sendText(from, rpgt, m, { mentions: parseMention(rpgt) })
+} catch (err) {
+console.log(err)
+}
 }
 break
             case prefix+'buylimit':{
@@ -2681,10 +2706,8 @@ break
                  if (args2[2].includes("-")) return reply(`Jangan menggunakan -`)
                  var anu = db.data.users[m.sender].Money
                  if (anu < args2[2] || anu == '0') return reply(`Balance Kamu Tidak Mencukupi Untuk Transfer Sebesar $${toCommas(args2[2])}, Kumpulkan Terlebih Dahulu\nKetik ${prefix}balance, untuk mengecek Balance mu!`)
-                 let ane = Number(parseInt(args2[2]) * 10000)
-                if (db.data.users[m.sender].Money < ane) return reply(bold(`Minimal 10.000`))
                  var htgm = randomNomor(1000, 2500)
-                 db.data.users[m.sender].Money -= ane
+                 db.data.users[m.sender].Money -= parseInt(args2[2]
                  db.data.users[m.sender].Money -= htgm
                  db.data.users[mentionUser[0]].Money += parseInt(args2[2])
                   let txt = `❏  *T R A N S F E R*
@@ -2692,7 +2715,7 @@ break
 “Berhasil melakukan transfer kepada *⁨@${mentionUser[0].split("@")[0]}* dengan nominal _$${toCommas(args2[2])}_”
 
 🛒 *Pajak* : $${toCommas(htgm)}
-💸 *Sisa Saldo* : $${toCommas(getBalance(sender, balance))}`
+💸 *Sisa Saldo* : $${toCommas(db.data.users[m.sender].Money)}`
 rzki.sendText(from, txt, m, { mentions: parseMention(txt) })
             }
                  break
@@ -4341,7 +4364,7 @@ addCountCmd('#tebak', sender, _cmd)
 break
 //tambahan
 	case prefix+'tebakgambar':{
-		        if (global.db.data.users[sender].limitGame < 1) return reply(`Limit game kamu sudah habis`)
+		        if (!isPremium && global.db.data.users[sender].limitGame < 1) return reply(`Limit game kamu sudah habis`)
 			    if (isPlayGame(from, tebakgambar2)) return reply(from, `Masih ada game yang belum diselesaikan`, tebakgambar2[getGamePosi(from, tebakgambar2)].msg)
 				var tg = JSON.parse(fs.readFileSync('./lib/Result/tebakgambar.json'))
 				var data = pickRandom(tg)
@@ -4356,7 +4379,7 @@ break
 				  }
 			    break
 case prefix+'tebakkata':{
-		        if (global.db.data.users[sender].limitGame < 1) return reply(`Limit game kamu sudah habis`)
+		        if (!isPremium && global.db.data.users[sender].limitGame < 1) return reply(`Limit game kamu sudah habis`)
 			    if (isPlayGame(from, kuiscuy)) return reply(from, `Masih ada game yang belum diselesaikan`, kuiscuy[getGamePosi(from, kuiscuy)].msg)
 				var kuisnya = JSON.parse(fs.readFileSync('./lib/Result/tebakkata.json'))
 				const kukus = pickRandom(kuisnya)
@@ -4371,7 +4394,7 @@ case prefix+'tebakkata':{
 				  }
 			    break
 case prefix+'kuis':{
-		        if (global.db.data.users[sender].limitGame < 1) return reply(`Limit game kamu sudah habis`)
+		        if (!isPremium && global.db.data.users[sender].limitGame < 1) return reply(`Limit game kamu sudah habis`)
 			    if (isPlayGame(from, tebaktebakan2)) return reply(from, `Masih ada game yang belum diselesaikan`, tebaktebakan2[getGamePosi(from, tebaktebakan2)].msg)
 				var tebaknya = JSON.parse(fs.readFileSync('./lib/Result/tebaktebakan.json'))
 				var hayo = pickRandom(tebaknya)
@@ -4386,7 +4409,7 @@ case prefix+'kuis':{
 				  }
 			    break
 case prefix+'tekateki':{
-		        if (global.db.data.users[sender].limitGame < 1) return reply(`Limit game kamu sudah habis`)
+		        if (!isPremium && global.db.data.users[sender].limitGame < 1) return reply(`Limit game kamu sudah habis`)
 			    if (isPlayGame(from, tekateki)) return reply(from, `Masih ada game yang belum diselesaikan`, tekateki[getGamePosi(from, tekateki)].msg)
 				var tebaknya = JSON.parse(fs.readFileSync('./lib/Result/tekateki.json'))
 				var hayo = pickRandom(tebaknya)
@@ -4401,7 +4424,7 @@ case prefix+'tekateki':{
 				  }
 			    break
 case prefix+'tebakkimia':{
-		        if (global.db.data.users[sender].limitGame < 1) return reply(`Limit game kamu sudah habis`)
+		        if (!isPremium && global.db.data.users[sender].limitGame < 1) return reply(`Limit game kamu sudah habis`)
 			    if (isPlayGame(from, tebakkimia)) return reply(from, `Masih ada game yang belum diselesaikan`, tebakkimia[getGamePosi(from, tebakkimia)].msg)
 				var tebaknya = JSON.parse(fs.readFileSync('./lib/Result/tebakkimia.json'))
 				var hayo = pickRandom(tebaknya)
