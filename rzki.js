@@ -444,8 +444,8 @@ afkTime: -1,
 afkReason: '',
 premium: false,
 limit: limitUser,
-limitGame: limitG
-Money: 0
+limitGame: limitG,
+Money: 0,
 }
 } catch (err) {
 console.error(err)
