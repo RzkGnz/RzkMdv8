@@ -2707,7 +2707,7 @@ break
                  var anu = db.data.users[m.sender].Money
                  if (anu < args2[2] || anu == '0') return reply(`Balance Kamu Tidak Mencukupi Untuk Transfer Sebesar $${toCommas(args2[2])}, Kumpulkan Terlebih Dahulu\nKetik ${prefix}balance, untuk mengecek Balance mu!`)
                  var htgm = randomNomor(1000, 2500)
-                 db.data.users[m.sender].Money -= parseInt(args2[2]
+                 db.data.users[m.sender].Money -= parseInt(args2[2])
                  db.data.users[m.sender].Money -= htgm
                  db.data.users[mentionUser[0]].Money += parseInt(args2[2])
                   let txt = `❏  *T R A N S F E R*
