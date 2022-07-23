@@ -2668,7 +2668,7 @@ break
                 if (db.data.users[m.sender].Money < ane) return reply(`Balance kamu tidak mencukupi untuk pembelian ini`)
                 db.data.users[m.sender].Money -= ane
                 db.data.users[m.sender].limit += parseInt(args2[1])
-                reply(monospace(`Pembeliaan limit sebanyak ${args2[1]} berhasil\n\nSisa Balance : $${toCommas(db.data.users[sender].Money))}\nSisa Limit : ${db.data.users[sender].limit}`))
+                reply(monospace(`Pembeliaan limit sebanyak ${args2[1]} berhasil\n\nSisa Balance : $${toCommas(db.data.users[sender].Money)}\nSisa Limit : ${db.data.users[sender].limit}`))
             }
                 break
 			case prefix+'transfer':
