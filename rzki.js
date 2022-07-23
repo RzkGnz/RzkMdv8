@@ -200,7 +200,8 @@ const isBotAdmins = m.isGroup ? groupAdmins.includes(botNumber) : false
 const isAdmins = m.isGroup ? groupAdmins.includes(m.sender) : false
 const isAutoSticker = m.isGroup ? autosticker.includes(from) : false
 const isSewa = _sewa.checkSewaGroup(from, sewa)
-const isPremium = isCreator ? true : _prem.checkPremiumUser(sender, premium)
+//const isPremium = isCreator ? true : _prem.checkPremiumUser(sender, premium)
+const isPremium = isCreator ? true : global.db.data.users[sender].premium
 const gcounti = global.gcounto
 const gcount = isPremium ? gcounti.prem : gcounti.user
 
@@ -2153,14 +2154,16 @@ case prefix+'cekprem':
 case prefix+'addprem':{
                 if (!isCreator) return reply(mess.owner)
                 if (args2.length < 2) return reply(`Penggunaan :\n*${prefix}addprem* @tag waktu\n*${prefix}addprem* nomor waktu\n\nContoh : ${command} @tag 30d`)
-                if (!args2[2]) return reply(`Mau yang berapa hari?`)
+               // if (!args2[2]) return reply(`Mau yang berapa hari?`)
                 if (mentionUser.length !== 0) {
-                    _prem.addPremiumUser(mentionUser[0], args2[2], premium)
+                    //_prem.addPremiumUser(mentionUser[0], args2[2], premium)
+                    global.db.data.users[mentionUser[0]].premium = true
                     reply('Sukses')
                 } else {
                  var cekap = await rzki.onWhatsApp(args2[1]+"@s.whatsapp.net")
                  if (cekap.length == 0) return reply(`Masukkan nomer yang valid/terdaftar di WhatsApp`)
-                    _prem.addPremiumUser(args2[1] + '@s.whatsapp.net', args2[2], premium)
+                   // _prem.addPremiumUser(args2[1] + '@s.whatsapp.net', args2[2], premium)
+                   global.db.data.users[args2[1] + '@s.whatsapp.net'].premium = true
                     reply('Sukses')
                 }
                 }
@@ -2178,14 +2181,16 @@ reply('Sukses')
                 if (!isCreator) return reply(mess.owner)
                 if (args2.length < 2) return reply(`Penggunaan :\n*${prefix}delprem* @tag\n*${prefix}delprem* nomor`)
                 if (mentionUser.length !== 0){
-                    premium.splice(_prem.getPremiumPosition(mentionUser[0], premium), 1)
-                    fs.writeFileSync('./src/premium.json', JSON.stringify(premium))
+                    /*premium.splice(_prem.getPremiumPosition(mentionUser[0], premium), 1)
+                    fs.writeFileSync('./src/premium.json', JSON.stringify(premium))*/
+                    global.db.data.users[mentionUser[0]].premium = false
                     reply('Sukses!')
                 } else {
                  var cekpr = await rzki.oWhatsApp(args2[1]+"@s.whatsapp.net")
                  if (cekpr.length == 0) return reply(`Masukkan nomer yang valid/terdaftar di WhatsApp`)
-                    premium.splice(_prem.getPremiumPosition(args2[1] + '@s.whatsapp.net', premium), 1)
-                    fs.writeFileSync('./src/premium.json', JSON.stringify(premium))
+                   /* premium.splice(_prem.getPremiumPosition(args2[1] + '@s.whatsapp.net', premium), 1)
+                    fs.writeFileSync('./src/premium.json', JSON.stringify(premium))*/
+                    global.db.data.users[args2[1] + '@s.whatsapp.net'].premium = false
                     reply('Sukses!')
                 }
                 break
