@@ -291,7 +291,6 @@ rzki.sendReadReceipt(from, m.sender, [m.key.id])
 }
 // Logs;
 		if (!m.isGroup && isCmd && !m.key.fromMe) {
-			addBalance(sender, randomNomor(45), balance)
 			console.log('->[\x1b[1;32mCMD\x1b[1;37m]', color(moment(m.messageTimestamp * 1000).format('DD/MM/YYYY HH:mm:ss'), 'yellow'), color(`${command} [${args2.length}]`), 'from', color(pushname))
 		}
 		if (m.isGroup && isCmd && !m.key.fromMe) {
@@ -430,6 +429,7 @@ var imagerandom = ['https://telegra.ph/file/2787459fb330773d728ef.jpg', 'https:/
 try {
 let isNumber = x => typeof x === 'number' && !isNaN(x)
 let limitUser = isPremium ? global.limitawal.prem : global.limitawal.free
+let limitG = isPremium ? gcounti.prem : gcounti.user
 let user = global.db.data.users[m.sender]
 if (typeof user !== 'object') global.db.data.users[m.sender] = {}
 if (user) {
@@ -437,11 +437,15 @@ if (!isNumber(user.afkTime)) user.afkTime = -1
 if (!('afkReason' in user)) user.afkReason = ''
 if (!('premium' in user)) user.premium = false
 if (!isNumber(user.limit)) user.limit = limitUser
+if (!isNumber(user.limitG)) user.limitG = limitG
+if (!isNumber(user.Money)) user.Money = 0
 } else global.db.data.users[m.sender] = {
 afkTime: -1,
 afkReason: '',
 premium: false,
 limit: limitUser,
+limitGame: limitG
+Money: 0
 }
 } catch (err) {
 console.error(err)
@@ -569,12 +573,14 @@ if (db.data.settings[botNumber].selff) { if (!isCreator && m.isGroup) return
 if (isCmd && !m.isGroup) { 
  var htgm = randomNomor(500, 700)
 addBalance(sender, randomNomor(htgm), balance)
+db.data.users[m.sender].Money += randomNomor(htgm)
 if (db.data.settings[botNumber].mutechat) { if (!isCreator && !isPremium && !m.isGroup) return buttonlink(`Mode : *ONLY GROUP*\n\nTidak bisa menggunakan bot di pesan pribadi\nDan Kalian Bisa Upgrade ke Premiun utk bisa di private\nJoin Grup untuk bisa mengakses bot`)
 }
 }
 if (isCmd && m.isGroup) { 
  var htgm = randomNomor(500, 700)
 addBalance(sender, randomNomor(htgm), balance)
+db.data.users[m.sender].Money += randomNomor(htgm)
 if (db.data.settings[botNumber].mutegrup) { if (!isCreator && m.isGroup) return 
 }
 }
@@ -877,7 +883,7 @@ fs.writeFileSync('./src/database.json', JSON.stringify(global.db.data, null, 2))
 }, 60 * 1000)*/
 
 // reset limit every 12 hours
-let cron = require('node-cron')
+/*let cron = require('node-cron')
 cron.schedule('00 12 * * *', () => {
 let user = Object.keys(global.db.data.users)
 let limitUser = isPremium ? global.limitawal.prem : global.limitawal.free
@@ -886,7 +892,7 @@ console.log('Reseted Limit')
 }, {
 scheduled: true,
 timezone: "Asia/Jakarta"
-})
+})*/
 
 
 if (tebaklagu.hasOwnProperty(m.sender.split('@')[0]) && !isCmd) {
@@ -2608,7 +2614,7 @@ rzki.sendMessage(from, {caption: `Sange kok sama gambar`, image: {url: hasil}}, 
 }
 break 
 // Bank & Payment Menu
-			case prefix+'topbalance':{
+			case prefix+'topbalance2':{
                 balance.sort((a, b) => (a.balance < b.balance) ? 1 : -1)
                 let top = '❏  *T O P - B A L A N C E*\n\n'
                 let arrTop = []
@@ -2622,6 +2628,15 @@ break
                 mentions(top, arrTop, true)
             }
                 break
+case prefix+'topbalance':
+case prefix+'leaderboard':
+addCountCmd('#topbalance', m.sender, _cmd)
+try {
+require('./lib/lb.js')(args, rzki, from, m)
+} catch (err) {
+console.log(err)
+}
+break
             case prefix+'buylimit':{
                 if (args2.length < 2) return reply(`Kirim perintah *${prefix}buylimit* jumlah limit yang ingin dibeli\n\nHarga 1 limit = $15000 balance`)
                 if (args2[1].includes('-')) return reply(`Jangan menggunakan -`)
@@ -6233,7 +6248,7 @@ case prefix+'toimage': case prefix+'toimg': {
 if (q.includes('-help')) return m.reply(examplyme) 
 if (isBan) return m.reply(mess.ban)
 if (!m.quoted) return m.reply('Reply Image')
-if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 if (!/webp/.test(mime)) return m.reply(`balas stiker dengan caption *${prefix + command.slice(1)}*`)
 reply(mess.wait)
 let media = await rzki.downloadAndSaveMediaMessage(quoted)
@@ -6246,14 +6261,15 @@ rzki.sendMessage(m.chat, { image: buffer }, { quoted: m })
 fs.unlinkSync(ran)
 })
 }
-limitAdd(sender, limit)
+//limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
 addCountCmd('#toimg', sender, _cmd)
 break
 case prefix+'tomp4': case prefix+'tovideo': {
 if (isBan) return m.reply(mess.ban)
 if (!m.quoted) return m.reply('Reply Image')
 if (!/webp/.test(mime)) return m.reply(`balas stiker dengan caption *${prefix + command.slice(1)}*`)
-if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 reply(mess.wait)
 let { webp2mp4File } = require('./lib/uploader')
 let media = await rzki.downloadAndSaveMediaMessage(quoted)
@@ -6261,34 +6277,37 @@ let webpToMp4 = await webp2mp4File(media)
 await rzki.sendMessage(m.chat, { video: { url: webpToMp4.result, caption: 'Convert Webp To Video' } }, { quoted: m })
 await fs.unlinkSync(media)
 }
-limitAdd(sender, limit)
+//limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
 break
 case prefix+'toaud': case prefix+'toaudio': {
 if (isBan) return m.reply(mess.ban)
 if (!/video/.test(mime) && !/audio/.test(mime)) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command.slice(1)}`)
 if (!m.quoted) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan Audio Dengan Caption ${prefix + command.slice(1)}`)
-if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 reply(mess.wait)
 let media = await quoted.download()
 let { toAudio } = require('./lib/converter')
 let audio = await toAudio(media, 'mp4')
 rzki.sendMessage(m.chat, {audio: audio, mimetype: 'audio/mpeg'}, { quoted : m })
 }
-limitAdd(sender, limit)
+//limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
 break
 case prefix+'tomp3': {
 if (isBan) return m.reply(mess.ban)
 if (/document/.test(mime)) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan MP3 Dengan Caption ${prefix + command.slice(1)}`)
 if (!/video/.test(mime) && !/audio/.test(mime)) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan MP3 Dengan Caption ${prefix + command.slice(1)}`)
 if (!m.quoted) return m.reply(`Kirim/Reply Video/Audio Yang Ingin Dijadikan MP3 Dengan Caption ${prefix + command.slice(1)}`)
-if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 reply(mess.wait)
 let media = await quoted.download()
 let { toAudio } = require('./lib/converter')
 let audio = await toAudio(media, 'mp4')
 rzki.sendMessage(m.chat, {document: audio, mimetype: 'audio/mpeg', fileName: `Convert By ${rzki.user.name} (${m.id}).mp3`}, { quoted : m })
 }
-limitAdd(sender, limit)
+//limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
 break
 case prefix+'tovn': case prefix+'toptt': {
 if (isBan) return m.reply(mess.ban)
@@ -6316,7 +6335,7 @@ await fs.unlinkSync(media)
 break
 case prefix+'tourl': {
 if (isBan) return m.reply(mess.ban)
-if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 reply(mess.wait)
 let { UploadFileUgu, webp2mp4File, TelegraPh } = require('./lib/uploader')
 let media = await rzki.downloadAndSaveMediaMessage(quoted)
@@ -6329,17 +6348,19 @@ m.reply(util.format(anu))
 }
 await fs.unlinkSync(media)
 }
-limitAdd(sender, limit)
+//limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
 break
 case prefix+'q': case prefix+'quoted': {
 if (isBan) return m.reply(mess.ban)
-if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 if (!m.quoted) return m.reply('Reply Pesannya!!')
 let wokwol = await rzki.serializeM(await m.getQuotedObj())
 if (!wokwol.quoted) return m.reply('Pesan Yang anda reply tidak mengandung reply')
 await wokwol.quoted.copyNForward(m.chat, true)
 }
-limitAdd(sender, limit)
+//limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
 break
 case prefix+'getname': {
 if (isBan) return m.reply(mess.ban)
@@ -6406,7 +6427,7 @@ break
 case prefix+'gimage': case prefix+'gig': {
 if (isBan) return m.reply(mess.ban)
 if (!args[0]) return m.reply("Mau cari gambar apa kak?")
-if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 reply(mess.wait)
 let gis = require('g-i-s')
 gis(args.join(" "), async (error, result) => {
@@ -6428,7 +6449,8 @@ headerType: 4
 rzki.sendMessage(m.chat, buttonMessage, { quoted: m })
 })
 }
-limitAdd(sender, limit)
+//limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
 break
 case prefix+'detiknews': case prefix+'detik':{
   if (args.length < 1) return m.reply(from, 'Cari berita apa?', { quoted : m } )
@@ -6613,7 +6635,7 @@ m.reply(String(err))
 addCountCmd('#ig', sender, _cmd)
 break*/
 case prefix+'igdl': case prefix+'instagram': case prefix+'ig':
-			    if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+			    if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 				if (args2.length < 2) return reply(`Kirim perintah ${command} link`)
 			    if (!isUrl(args2[1])) return reply('Link Invalid')
 			    if (!args2[1].includes('instagram.com')) return reply('Link Invalid')
@@ -6626,7 +6648,8 @@ case prefix+'igdl': case prefix+'instagram': case prefix+'ig':
 				   rzki.sendMessage(from, { image: { url: i.url }},{quoted: m})
 			      }
 			     }
-				 limitAdd(sender, limit)
+				 //limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
 			    }) 
 			    break
 case prefix+'ig2': {
@@ -6848,7 +6871,7 @@ break
 case prefix+'play3': case prefix+'ytplay3': {
 if (q.includes('-help')) return m.reply(examquery) 
                 if (!text) m.reply(`Example : ${prefix + command.slice(1)} bts boy with luv`)
-                if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+                if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
                 reply(mess.wait)
                 let url = await yts(text)
                 let anu = url.videos[0]
@@ -6885,14 +6908,15 @@ if (q.includes('-help')) return m.reply(examquery)
                   const gktau = await reSize({url:anu.thumbnail}, 200, 200)
 rzki.send5Loc(m.chat, ngen, `Playing To ${text}`, gktau, buttons)
             }
-            limitAdd(sender, limit)
+            //limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
             addCountCmd('#play', sender, _cmd)
             break
 case prefix+'play': case prefix+'musik': case prefix+'ytplay': {
 	    if (q.includes('-help')) return m.reply(examlink) 
                 let { yta } = require('./lib/y2mate')
                                 if (!text) m.reply(`Example : ${prefix + command.slice(1)} bts boy with luv`)
-                if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+                if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
                 let url = await yts(text)
                 let anu = url.videos[0]
                 let media = await yta(anu.url, '128kbps')
@@ -6902,14 +6926,15 @@ case prefix+'play': case prefix+'musik': case prefix+'ytplay': {
                 //rzki.sendMessage(m.chat, { audio: { url: media.dl_link }, mimetype: 'audio/mpeg', fileName: `${media.title}.mp3` }, { quoted: m })
                 rzki.sendMessage(from, { document: { url: media.dl_link }, fileName: `${media.title}.mp3`, mimetype: 'audio/mp3' }, { quoted: m })
             }
-            limitAdd(sender, limit)
+            //limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
             addCountCmd('#play', sender, _cmd)
             break
 case prefix+'video': {
             if (q.includes('-help')) return m.reply(examlink) 
                 let { ytv } = require('./lib/y2mate')
                 if (!text) m.reply(`Example : ${prefix + command.slice(1)} bts boy with luv`)
-                if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+                if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
                 let url = await yts(text)
                 let anu = url.videos[0]
                 let media = await ytv(anu.url, '360p')
@@ -6917,14 +6942,15 @@ case prefix+'video': {
                 if (media.filesize >= 100000) return reply('Video size is too big '+util.format(media))
                 rzki.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `❏  *PLAY - VIDEO*\n\n   ›  *Title :* ${media.title}\n   ›  *File Size :* ${media.filesizeF}\n   ›  *Url :* ${anu.url}\n   ›  *Ext :* MP4\n   ›  *Resololution :* 360p\n\n*𝚂𝚒𝚖𝚙𝚕𝚎 𝚠𝚑𝚊𝚝𝚜𝚊𝚙𝚙 𝙱𝙾𝚃 [ 𝙼𝙳 ]*` }, { quoted: m })
             }
-            limitAdd(sender, limit)
+            //limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
             addCountCmd('#video', sender, _cmd)
             break
 case prefix+'videohd': {
             if (q.includes('-help')) return m.reply(examlink) 
                 let { ytv } = require('./lib/y2mate')
                 if (!text) m.reply(`Example : ${prefix + command.slice(1)} bts boy with luv`)
-                if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+                if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
                 let url = await yts(text)
                 let anu = url.videos[0]
                 let media = await ytv(anu.url, '720p')
@@ -6932,14 +6958,15 @@ case prefix+'videohd': {
                 if (media.filesize >= 150000) return reply('Video size is too big '+util.format(media))
                 rzki.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `❏  *PLAY - VIDEO*\n\n   ›  *Title :* ${media.title}\n   ›  *File Size :* ${media.filesizeF}\n   ›  *Url :* ${anu.url}\n   ›  *Ext :* MP4\n   ›  *Resololution :* 720p\n\n*𝚂𝚒𝚖𝚙𝚕𝚎 𝚠𝚑𝚊𝚝𝚜𝚊𝚙𝚙 𝙱𝙾𝚃 [ 𝙼𝙳 ]*` }, { quoted: m })
             }
-            limitAdd(sender, limit)
+            //limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
             addCountCmd('#videohd', sender, _cmd)
             break
 	    case prefix+'ytmp3': case prefix+'ytaudio': {
 	    if (q.includes('-help')) return m.reply(examlink) 
                 let { yta } = require('./lib/y2mate')
                 if (!text) reply(`Example : ${prefix + command.slice(1)} https://youtube.com/watch?v=PtFMh6Tccag%27 320kbps`)
-                if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+                if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
                 let quality = args[1] ? args[1] : '128kbps'
                 let media = await yta(text, quality)
                 reply(mess.wait)
@@ -6948,21 +6975,23 @@ case prefix+'videohd': {
                 //rzki.sendMessage(m.chat, { audio: { url: media.dl_link }, mimetype: 'audio/mpeg', fileName: `${media.title}.mp3` }, { quoted: m })
                 rzki.sendMessage(from, { document: { url: media.dl_link }, fileName: `${media.title}.mp3`, mimetype: 'audio/mp3' }, { quoted: m })
             }
-            limitAdd(sender, limit)
+            //limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
             addCountCmd('#ytmp3', sender, _cmd)
             break
             case prefix+'ytmp4': case prefix+'ytvideo': {
             if (q.includes('-help')) return m.reply(examlink) 
                 let { ytv } = require('./lib/y2mate')
                 if (!text) reply(`Example : ${prefix + command.slice(1)} https://youtube.com/watch?v=PtFMh6Tccag%27 360p`)
-                if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+                if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
                 let quality = args[1] ? args[1] : '360p'
                 let media = await ytv(text, quality)
                 reply(mess.wait)
                 if (media.filesize >= 100000) return reply('Video size is too big '+util.format(media))
                 rzki.sendMessage(m.chat, { video: { url: media.dl_link }, mimetype: 'video/mp4', fileName: `${media.title}.mp4`, caption: `❏  *YT - MP4*\n\n   ›  *Title :* ${media.title}\n   ›  *File Size :* ${media.filesizeF}\n   ›  *Url :* ${isUrl(text)}\n   ›  *Ext :* MP4\n   ›  *Resololution :* ${args[1] || '360p'}\n\n*𝚂𝚒𝚖𝚙𝚕𝚎 𝚠𝚑𝚊𝚝𝚜𝚊𝚙𝚙 𝙱𝙾𝚃 [ 𝙼𝙳 ]*` }, { quoted: m })
             }
-            limitAdd(sender, limit)
+            //limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
             addCountCmd('#ytmp4', sender, _cmd)
             break
 case prefix+'play2': case prefix+'ytplay2': {
@@ -7010,7 +7039,7 @@ case prefix+'ytmp42': case prefix+'ytmp32': case prefix+'ytdl': case prefix+'you
 if (q.includes('-help')) return m.reply(examlink) 
 if (isBan) return m.reply(mess.ban)
 if (!args[0]) return m.reply(mess.linkm)
-if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 reply(mess.wait)
 try {
 hx.youtube(args[0]).then(async(res) => {
@@ -7044,7 +7073,8 @@ rzki.send5Loc(m.chat, textyt, ``, gktau, buttons)
 m.reply("Linknya Error!")
 }
 }
-limitAdd(sender, limit)
+//limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
 addCountCmd('#ytmp3', sender, _cmd)
 break
 case prefix+'gitclone':
@@ -7142,7 +7172,7 @@ case prefix+'smeme': case prefix+'smm': {
 if (q.includes('-help')) return m.reply(examplyme) 
 if (isBan) return m.reply(mess.ban)
 if (!args.join(" ")) return m.reply("Masukan Textnya!")
-if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 if (/image/.test(mime)) {
 var media = await rzki.downloadAndSaveMediaMessage(quoted, "smeme")
 imgbbUploader('fb39bda7f29404349f9ea07e48cecf4d', media)
@@ -7159,7 +7189,8 @@ throw err
 m.reply("Kirim foto dengan caption smeme")
 }
 }
-limitAdd(sender, limit)
+//limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
 addCountCmd('#smeme', sender, _cmd)
 break
 /*case prefix+'ttp': case prefix+'attp': {
@@ -7181,7 +7212,7 @@ break*/
 case prefix+'stiker':  case prefix+'sticker': case prefix+'s': {
 if (q.includes('-help')) return m.reply(examplyme) 
 if (isBan) return m.reply(mess.ban)
-if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 if (/image/.test(mime)) {
 let media = await quoted.download()
 let encmedia = await rzki.sendImageAsSticker(m.chat, media, m, { packname: global.packname, author: global.packname2 })
@@ -7196,7 +7227,8 @@ m.reply(`Kirim Gambar/Video Dengan Caption ${prefix + command.slice(1)}\nDurasi 
 }
 }
 addCountCmd('#sticker', sender, _cmd)
-limitAdd(sender, limit)
+//limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
 break
 case prefix+'mediafire':
 if (!isPremium) return reply(mess.prem)
@@ -7214,7 +7246,7 @@ rzki.sendMessage(from, {document:{url:`${rescun[0].link}`}, mimetype: `applicati
 break
 case prefix+'emojimix': {
 	        if (!text) reply(`Example : ${prefix + command.slice(1)} 😅+🤔`)
-	        if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+	        if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 		let [emoji1, emoji2] = text.split`+`
 		let anu = await fetchJson(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${encodeURIComponent(emoji1)}_${encodeURIComponent(emoji2)}`)
 		for (let res of anu.results) {
@@ -7222,13 +7254,15 @@ case prefix+'emojimix': {
 		    await fs.unlinkSync(encmedia)
 		}
 	    }
-	    limitAdd(sender, limit)
+	    ////limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
+	    db.data.users[m.sender].limit -= 1
 	    addCountCmd('#emojimix', sender, _cmd)
 	    break
 case prefix+'emojimix2': {
 if (isBan) return reply(mess.ban)
 if (!args.join(" ")) return reply(`Example : ${command} 😅`)
-if (isLimit(sender, isPremium, isCreator, limitCount, limit)) return reply (mess.limitH)
+if  (!isPremium && global.db.data.users[m.sender].limit < 1) return reply (mess.limitH)
 try {
 let anu = await fetchJson(`https://tenor.googleapis.com/v2/featured?key=AIzaSyAyimkuYQYF_FXVALexPuGQctUWRURdCYQ&contentfilter=high&media_filter=png_transparent&component=proactive&collection=emoji_kitchen_v5&q=${encodeURIComponent(text)}`)
 for (let res of anu.results) {
@@ -7239,7 +7273,8 @@ await fs.unlinkSync(encmedia)
 m.reply("Tidak ditemukan!")
 }
 }
-limitAdd(sender, limit)
+	    //limitAdd(sender, limit)
+	    db.data.users[m.sender].limit -= 1
 addCountCmd('#emojimix2', sender, _cmd)
 break
 // Eval Ada Disini
