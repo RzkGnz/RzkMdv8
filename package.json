@@ -13,7 +13,7 @@
   "author": "rzki",
   "license": "MIT",
   "dependencies": {
-  "@adiwajshing/baileys": "github:adiwajshing/baileys",
+  "@adiwajshing/baileys": "^4.1.0",
   "@adiwajshing/keyed-db": "^0.2.4",
   "@develoka/angka-terbilang-js": "^1.4.2",
   "awesome-phonenumber": "^2.70.0",
