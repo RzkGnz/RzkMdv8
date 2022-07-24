@@ -995,7 +995,8 @@ if (isWin || isSurender) delete _family100['family100'+m.chat]
 		    var htgm = randomNomor(70000, 50000)
 			addBalance(sender, htgm, balance)
 			db.data.users[m.sender].Money += htgm
-		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tebakgambar2)}\nHadiah : $${toCommas2(htgm)} balance\nKode Game : ${kode}\n\nIngin bermain lagi? Pencet Tombol Dibawah`
+            db.data.users[m.sender].limit += 35
+		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tebakgambar2)}\nHadiah : $${toCommas2(htgm)} balance & 35+ Limit\nKode Game : ${kode}\n\nIngin bermain lagi? Pencet Tombol Dibawah`
 			var tebakgmbr = [
 			{ quickReplyButton: { displayText: `Main Lagi`, id: `${prefix}tebakgambar` } },
 		]
@@ -1010,8 +1011,9 @@ if (isWin || isSurender) delete _family100['family100'+m.chat]
 		    var htgm = randomNomor(70000, 50000)
 			addBalance(sender, htgm, balance)
 			db.data.users[m.sender].Money += htgm
+            db.data.users[m.sender].limit += 35
 			var kode = randomNomor(1000000000, 9000000000)
-		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, kuiscuy)}\nHadiah : $${toCommas2(htgm)} balance\nKode Game : ${kode}\n\nIngin bermain lagi? Pencet Tombol Dibawah`
+		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, kuiscuy)}\nHadiah : $${toCommas2(htgm)} balance & 35+ Limit\nKode Game : ${kode}\n\nIngin bermain lagi? Pencet Tombol Dibawah`
 			var kus = [
 			{ quickReplyButton: { displayText: `Main Lagi`, id: `${prefix}tebakkata` } },
 		]
@@ -1027,7 +1029,8 @@ if (isWin || isSurender) delete _family100['family100'+m.chat]
 		    var htgm = randomNomor(70000, 50000)
 			addBalance(sender, htgm, balance)
 			db.data.users[m.sender].Money += htgm
-		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tekateki)}\nHadiah : $${toCommas2(htgm)} balance\nKode Game : ${kode}\n\nIngin bermain lagi? Pencet Tombol Dibawah`
+            db.data.users[m.sender].limit += 35
+		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tekateki)}\nHadiah : $${toCommas2(htgm)} balance & 35+ Limit\nKode Game : ${kode}\n\nIngin bermain lagi? Pencet Tombol Dibawah`
 			var kus = [
 			{ quickReplyButton: { displayText: `Main Lagi`, id: `${prefix}tekateki` } },
 		]
@@ -1041,8 +1044,9 @@ if (isWin || isSurender) delete _family100['family100'+m.chat]
 		  if (chath.toLowerCase() == getJawabanGame(from, tebakkimia)) {
 		    var htgm = randomNomor(70000, 50000)
 		    db.data.users[m.sender].Money += htgm
+            db.data.users[m.sender].limit += 35
 			addBalance(sender, htgm, balance)
-		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tebakkimia)}\nHadiah : $${toCommas2(htgm)} balance\n\nIngin bermain lagi? Pencet Tombol Dibawah`
+		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tebakkimia)}\nHadiah : $${toCommas2(htgm)} balance & 35+ Limit\n\nIngin bermain lagi? Pencet Tombol Dibawah`
 			var kus = [
 			{ quickReplyButton: { displayText: `Main Lagi`, id: `${prefix}tebakkimia` } },
 		]
@@ -1057,7 +1061,8 @@ if (isWin || isSurender) delete _family100['family100'+m.chat]
 		    var htgm = randomNomor(70000, 50000)
 			addBalance(sender, htgm, balance)
 			db.data.users[m.sender].Money += htgm
-		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tebaktebakan2)}\nHadiah : $${toCommas2(htgm)} balance\n\nIngin bermain lagi? Pencet Tombol Dibawah`
+            db.data.users[m.sender].limit += 35
+		    var texttg = `*Selamat ${pushname} Jawaban Kamu Benar 🎉*\n\nJawaban : ${getJawabanGame(from, tebaktebakan2)}\nHadiah : $${toCommas2(htgm)} balance & 35+ Limit\n\nIngin bermain lagi? Pencet Tombol Dibawah`
 			var kus = [
 			{ quickReplyButton: { displayText: `Main Lagi`, id: `${prefix}kuis` } },
 		]
@@ -2637,13 +2642,13 @@ break
                 break
 case prefix+'claim':{
 let __timers = (new Date - global.db.data.users[m.sender].lastclaim)
-    let _timers = (43200000 - __timers)
+    let _timers = (1658630014001 - __timers)
     let timers = clockString(_timers) 
     let user = global.db.data.users[m.sender]
-    if (new Date - global.db.data.users[m.sender].lastclaim > 43200000) {
-        rzki.sendText(m.chat, `*Selamat, kamu mendapat Saldo $100.000 dan +50 limit✨*`, m)
+    if (new Date - global.db.data.users[m.sender].lastclaim > 1658630014001) {
+        rzki.sendText(m.chat, `*Selamat, kamu mendapat Saldo $100.000 dan +25 limit✨*`, m)
         user.Money += 100000
-        user.limit += 50
+        user.limit += 25
         user.lastclaim = new Date * 1
     } else rzki.sendText(m.chat, `*Kamu sudah melakukan klaim silahkan klaim kembali di jam berikutnya.*\n\n*Timeout : [ ${timers} ]*`, m)
 }
@@ -2681,7 +2686,7 @@ let rpgt = `❏  *T O P - G L O B A L*
 
 “Saldo Anda di peringkat *${usersmoney.indexOf(m.sender) + 1}* dari *${usersmoney.length}* anggota ${groupMetadata.subject}”
 
-${sortedmoney.slice(0, len).map(([user, data], i) => (i + 1) + '. @' + user.split`@`[0] + '\n   *Saldo  : ' + toCommas2(data.Money) + '* ').join`\n`}
+${sortedmoney.slice(0, len).map(([user, data], i) => (i + 1) + '. @' + user.split`@`[0] + '\n   *Saldo  : $' + toCommas2(data.Money) + '* ').join`\n`}
 
 “Limit Anda di peringkat *${usersLimit.indexOf(m.sender) + 1}* dari *${usersLimit.length}* anggota ${groupMetadata.subject}”
 
