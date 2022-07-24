@@ -35,19 +35,19 @@ global.mess = {
     wait: '*Tunggu Beberapa Detik...*',
     prem: '*Upgrade premium 🛍️*\n\n*Untuk menggunakan fitur ini*',
     premN:'*❏ INFO PREMIUM*\n\nDengan mendaftar menjadi user premium anda akan mendapatkan keuntungan sebagai berikut :\n\n1. Bisa menggunakan semua fitur\n2. mendapatkan unlimited limit\n3. bisa memainkan di pesan pribadi\n\nSilahkan hubungi owner ( *.owner* ) untuk melakukan upgrade premium hanya dengan Rp. 5.000 per bulan\n\nInvite bot ke GC kalian ? ketik *.sewabot*',
-    limitH:'*❏ LIMIT HABIS*\n\nCara mendapatkan limit :\n1. Beli limit ( *.buylimit 10* )\n2. Bermain Games\n\n*Upgrade premium : unlimited limit*',
+    limitH:'*❏ LIMIT HABIS*\n\nCara mendapatkan limit :\n1. Beli limit ( *.buylimit 10* )\n2. Claim limit ( *.claim* )\n3. Bermain Games\n\n*Upgrade premium : unlimited limit*',
     linkm: '*Linknya Mana Kak?*',
     ban: '*Kamu telah dibanned oleh owner, Jika ingin di unbanned chat owner*'
 }
+global.limitMins = 5,
 global.gamewaktu = 90,
-global.limitCount = 20,
 global.gcounto = {
 	"prem": "Unlimited",
-	"user": 30
+	"user": 50
 }
 global.limitawal = {
     prem: "Unlimited",
-    free: 30
+    free: 75
 }
 
 let file = require.resolve(__filename)
