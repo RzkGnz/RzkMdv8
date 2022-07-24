@@ -198,7 +198,7 @@ textwel = `𝙒𝙀𝙇𝘾𝙊𝙈𝙀  _*@${num.split("@")[0]}*_ `
 
       let txt = (groupSet.text_welcome != '' ? groupSet.text_welcome : text_welcome).replace('+tag', `@${num.split("@")[0]}`).replace('+grup', `${metadata.subject}`)
                        var but = [{buttonId: `/`, buttonText: { displayText: "Welcome 🥳" }, type: 1 }]
-				rzki.sendMessage(anu.id, { caption: textwel, image: {url: ppuser}, buttons: but, footer: `‎`, mentions: [num]})
+				rzki.sendMessage(anu.id, { caption: txt, image: {url: ppuser}, buttons: but, footer: `‎`, mentions: [num]})
                 } else if (anu.action == 'remove') {
                 if (!left.includes(anu.id)) return
                   //if (db.data.chats[anu.id].left) return
@@ -212,7 +212,7 @@ textleft = `𝙇𝙀𝘼𝙑𝙄𝙉𝙂 𝙏𝙊 _*${metadata.subject}*_`
        let txt = (groupSet.text_left != '' ? groupSet.text_left : text_left).replace('+tag', `@${num.split("@")[0]}`).replace('+grup', `${metadata.subject}`)
                    // rzki.sendMessage(anu.id, { image: { url: ppuser }, contextInfo: { mentionedJid: [num] }, caption: `@${num.split("@")[0]} Leaving To ${metadata.subject}` })
                      var but = [{buttonId: `/`, buttonText: { displayText: "Good Bye 👋" }, type: 1 }]
-				rzki.sendMessage(anu.id, { caption: textleft, image: {url: ppuser}, buttons: but, footer: `‎`, mentions: [num]})
+				rzki.sendMessage(anu.id, { caption: txt, image: {url: ppuser}, buttons: but, footer: `‎`, mentions: [num]})
                 }
             }
         } catch (err) {
