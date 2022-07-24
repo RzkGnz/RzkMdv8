@@ -8,8 +8,7 @@
 exports.updatebot = (prefix) => {
     return `❏   *U P D A T E*
     
-	›  Fixed All Fitur
-	›  Add Cutt`
+	›  Fixed All Fitur`
 }
 exports.menurandom = (prefix) => {
 	return `❏   *M A I N*
@@ -30,6 +29,9 @@ exports.menurandom = (prefix) => {
 	›  ${prefix}cekbandwidth
 	›  ${prefix}listonline
 	›  ${prefix}listprem
+	›  ${prefix}listblock
+	›  ${prefix}topglobal
+	›  ${prefix}claim
 	›  ${prefix}cekprem
 	›  ${prefix}me
 	›  ${prefix}dashboard
@@ -313,8 +315,9 @@ exports.menurandom = (prefix) => {
 	›  ${prefix}odemote
 	›  ${prefix}textwel
 	›  ${prefix}textleft
-	›  ${prefix}block *@user*
-	›  ${prefix}unblock *@user*
+	›  ${prefix}block *add/del*
+	›  ${prefix}blockuser *@user*
+	›  ${prefix}unblockuser *@user*
 	›  ${prefix}sewa *add/del*
 	›  ${prefix}getcase *fitur*
 	›  ${prefix}setppbot *image*
