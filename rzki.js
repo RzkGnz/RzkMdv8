@@ -439,6 +439,7 @@ if (!('premium' in user)) user.premium = false
 if (!isNumber(user.limit)) user.limit = limitUser
 if (!isNumber(user.limitGame)) user.limitGame = limitG
 if (!isNumber(user.Money)) user.Money = 0
+if (!isNumber(user.lastclaim)) user.lastclaim = 0
 } else global.db.data.users[m.sender] = {
 afkTime: -1,
 afkReason: '',
@@ -446,6 +447,7 @@ premium: false,
 limit: limitUser,
 limitGame: limitG,
 Money: 0,
+lastclaim: 0,
 }
 } catch (err) {
 console.error(err)
@@ -1482,11 +1484,7 @@ id: '.dashboard'
     let examtag = `*Example* : ${prefix + command.slice(1)} lalu tag nomor seseorang`
     let examply = `*Example* : gunakan ${prefix + command.slice(1)} sekalian reply pesan bot`
     let examplyme = `Kirim Media lalu reply dengan ${prefix + command.slice(1)}`
-    
-   /* if (budy.startsWith(`${prefix}menu`)) {
-rzki.sendMessage(from, { react: { text: `🇮🇩`, key: m.key }})
-}*/
-    
+   
     let footermenu = `Tambahkan -help setelah command untuk melihat Info command tersebut Example : .play -help
 
 Thanks To
@@ -2637,6 +2635,19 @@ break
                 mentions(top, arrTop, true)
             }
                 break
+case prefix+'claim':{
+let __timers = (new Date - global.db.data.users[m.sender].lastclaim)
+    let _timers = (43200000 - __timers)
+    let timers = clockString(_timers) 
+    let user = global.db.data.users[m.sender]
+    if (new Date - global.db.data.users[m.sender].lastclaim > 43200000) {
+        rzki.sendText(m.chat, `*Selamat, kamu mendapat Saldo $100.000 dan +50 limit✨*`, m)
+        user.Money += 100000
+        user.limit += 50
+        user.lastclaim = new Date * 1
+    } else rzki.sendText(m.chat, `*Kamu sudah melakukan klaim silahkan klaim kembali di jam berikutnya.*\n\n*Timeout : [ ${timers} ]*`, m)
+}
+break
 case prefix+'topbalance':{
 addCountCmd('#topbalance', m.sender, _cmd)
 try {
@@ -2670,7 +2681,7 @@ let rpgt = `❏  *T O P - G L O B A L*
 
 “Saldo Anda di peringkat *${usersmoney.indexOf(m.sender) + 1}* dari *${usersmoney.length}* anggota ${groupMetadata.subject}”
 
-${sortedmoney.slice(0, len).map(([user, data], i) => (i + 1) + '. @' + user.split`@`[0] + '\n   *Uang  : ' + data.Money + '* ').join`\n`}
+${sortedmoney.slice(0, len).map(([user, data], i) => (i + 1) + '. @' + user.split`@`[0] + '\n   *Saldo  : ' + toCommas2(data.Money) + '* ').join`\n`}
 
 “Limit Anda di peringkat *${usersLimit.indexOf(m.sender) + 1}* dari *${usersLimit.length}* anggota ${groupMetadata.subject}”
 
