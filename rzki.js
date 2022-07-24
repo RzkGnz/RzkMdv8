@@ -2642,10 +2642,10 @@ break
                 break
 case prefix+'claim':{
 let __timers = (new Date - global.db.data.users[m.sender].lastclaim)
-    let _timers = (1658630014001 - __timers)
+    let _timers = (2500000 - __timers)
     let timers = clockString(_timers) 
     let user = global.db.data.users[m.sender]
-    if (new Date - global.db.data.users[m.sender].lastclaim > 1658630014001) {
+    if (new Date - global.db.data.users[m.sender].lastclaim > 2500000) {
         rzki.sendText(m.chat, `*Selamat, kamu mendapat Saldo $100.000 dan +25 limit✨*`, m)
         user.Money += 100000
         user.limit += 25
@@ -2654,6 +2654,7 @@ let __timers = (new Date - global.db.data.users[m.sender].lastclaim)
 }
 break
 case prefix+'topbalance':{
+if (!m.isGroup) return m.reply(mess.group)
 addCountCmd('#topbalance', m.sender, _cmd)
 try {
 let sortedLimit = Object.entries(global.DATABASE.data.users).sort((a, b) => b[1].limit - a[1].limit)
@@ -2675,6 +2676,7 @@ console.log(err)
 break
 case prefix+'topglobal':
 case prefix+'leaderboard':{
+if (!m.isGroup) return m.reply(mess.group)
 addCountCmd('#topglobal', m.sender, _cmd)
 try {
 let sortedLimit = Object.entries(global.DATABASE.data.users).sort((a, b) => b[1].limit - a[1].limit)
