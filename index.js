@@ -84,7 +84,7 @@ console.log(color('[DEV]', 'cyan'), color('Welcome back, Owner! Hope you are doi
     const rzki = rzkiConnect({
         logger: pino({ level: 'silent' }),
         printQRInTerminal: true,
-        browser: ['RZK BOTZ','Safari','1.0.0'],
+        browser: ['RZK BOTZ','Safari','3.0.0'],
         auth: state,
         version
     })
@@ -131,7 +131,6 @@ rzki.ev.on('groups.update', async pea => {
 
 //Welcome
 rzki.ev.on('group-participants.update', async (anu) => {
-//if (db.data.chats[anu.id].welcome) return
 //if (!wlcm.includes(anu.id)) return
         console.log(anu)
         try {
@@ -178,38 +177,13 @@ await sleep(5000)
 rzki.groupRevokeInvite(m.chat)
                     }
                    // rzki.sendMessage(anu.id, { image: { url: ppuser }, contextInfo: { mentionedJid: [num] }, caption: `Welcome To ${metadata.subject} @${num.split("@")[0]}` })
-                   
-if (db.data.chats[m.chat].SetWelkam1) {                       
-textwel = `𝙃𝙀𝙇𝙇𝙊 𝙒𝙀𝙇𝘾𝙊𝙈𝙀 𝙏𝙊 _*${metadata.subject}*_
 
-𝙄𝙉𝙏𝙍𝙊 𝙈𝙀𝙈𝘽𝙀𝙍 𝘽𝘼𝙍𝙐
-
-• 𝙉𝘼𝙈𝘼: 
-• 𝙐𝙈𝙐𝙍:
-• 𝙎𝙏𝘼𝙏𝙐𝙎:
-• 𝘼𝙎𝙆𝙊𝙏:
-
-𝙎𝙀𝙍𝙄𝙉𝙂 𝙉𝙄𝙈𝘽𝙍𝙐𝙉𝙂 𝘿𝘼𝙉 𝘽𝘼𝘾𝘼 𝙍𝙐𝙇𝙀𝙎 𝙂𝙍𝙐𝙋`
-} else if (db.data.chats[m.chat].SetWelkam2) {      
-textwel = `𝙃𝙀𝙇𝙇𝙊 _*@${num.split("@")[0]}*_\n𝙒𝙀𝙇𝘾𝙊𝙈𝙀 𝙏𝙊 _*${metadata.subject}*_\n𝘿𝙀𝙎𝘾 _*${metadata.desc}*_`
-} else if (db.data.chats[m.chat].SetWelkam3) {      
-textwel = `𝙒𝙀𝙇𝘾𝙊𝙈𝙀  _*@${num.split("@")[0]}*_ `
-}
-
-      let txt = (groupSet.text_welcome != '' ? groupSet.text_welcome : text_welcome).replace('+tag', `@${num.split("@")[0]}`).replace('+grup', `${metadata.subject}`)
+      let txt = (groupSet.text_welcome != '' ? groupSet.text_welcome : text_welcome).replace('+tag', `@${num.split("@")[0]}`).replace('+grup', `${metadata.subject}`).replace('+desc', `${metadata.desc}`)
                        var but = [{buttonId: `/`, buttonText: { displayText: "Welcome 🥳" }, type: 1 }]
 				if (groupSet.welcome) rzki.sendMessage(anu.id, { caption: txt, image: {url: ppuser}, buttons: but, footer: `‎`, mentions: [num]})
                 } else if (anu.action == 'remove') {
-                //if (!left.includes(anu.id)) return
-                  //if (db.data.chats[anu.id].left) return
-if (db.data.chats[m.chat].SetLeft1) {                                           
-textleft = `𝘽𝙔𝙀𝙀`
-} else if (db.data.chats[m.chat].SetLeft2) {  
-textleft = `𝙎𝘼𝙔𝙊𝙉𝘼𝙍𝘼`
-} else if (db.data.chats[m.chat].SetLeft3) {  
-textleft = `𝙇𝙀𝘼𝙑𝙄𝙉𝙂 𝙏𝙊 _*${metadata.subject}*_`
-}
-       let txt = (groupSet.text_left != '' ? groupSet.text_left : text_left).replace('+tag', `@${num.split("@")[0]}`).replace('+grup', `${metadata.subject}`)
+                  //if (!left.includes(anu.id)) return
+       let txt = (groupSet.text_left != '' ? groupSet.text_left : text_left).replace('+tag', `@${num.split("@")[0]}`).replace('+grup', `${metadata.subject}`).replace('+desc', `${metadata.desc}`)
                    // rzki.sendMessage(anu.id, { image: { url: ppuser }, contextInfo: { mentionedJid: [num] }, caption: `@${num.split("@")[0]} Leaving To ${metadata.subject}` })
                      var but = [{buttonId: `/`, buttonText: { displayText: "Good Bye 👋" }, type: 1 }]
 				if (groupSet.left) rzki.sendMessage(anu.id, { caption: txt, image: {url: ppuser}, buttons: but, footer: `‎`, mentions: [num]})

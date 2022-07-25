@@ -396,12 +396,6 @@ let chats = global.db.data.chats[m.chat]
                 if (!('autostiker' in chats)) chats.autostiker = false
                 if (!('welcome' in chats)) chats.welcome = false
                 if (!('left' in chats)) chats.left = false
-                if (!('SetWelkam1' in chats)) chats.SetWelkam1 = false
-                if (!('SetWelkam2' in chats)) chats.SetWelkam2 = false
-                if (!('SetWelkam3' in chats)) chats.SetWelkam3 = false
-                if (!('SetLeft1' in chats)) chats.SetLeft1 = false
-                if (!('SetLeft2' in chats)) chats.SetLeft2 = false
-                if (!('SetLeft3' in chats)) chats.SetLeft3 = false
                 if (!('text_left' in chats)) chats.text_left = ''
                 if (!('text_welcome' in chats)) chats.text_welcome = ''
             } else global.db.data.chats[m.chat] = {
@@ -410,12 +404,6 @@ let chats = global.db.data.chats[m.chat]
                 autostiker: false,
                 welcome: false,
                 left: false,
-                SetWelkam1: false,
-                SetWelkam2: false,
-                SetWelkam3: false,
-                SetLeft1: false,
-                SetLeft2: false,
-                SetLeft3: false,
                 text_left: '',
                 text_welcome: '',
             }
@@ -1777,69 +1765,21 @@ m.reply("*Succes Change Menu To Doc*")
 } else {
 		}
 break
-case prefix+'textwel2':
-if (!isCreator) return m.reply(mess.owner)
-if (!q) return m.reply('Mau Set Welcome Ke Gmna? Welcome Yg Tersedia : 1,2,3,off')
-if (q == "1") {
-db.data.chats[m.chat].SetWelkam1 = true
-db.data.chats[m.chat].SetWelkam2 = false
-db.data.chats[m.chat].SetWelkam3 = false
-m.reply("*Succes Change Type 1*")
-} else if (q == "2") {
-db.data.chats[m.chat].SetWelkam1 = false
-db.data.chats[m.chat].SetWelkam2 = true
-db.data.chats[m.chat].SetWelkam3 = false
-m.reply("*Succes Change Type 2*")
-} else if (q == "3") {
-db.data.chats[m.chat].SetWelkam1 = false
-db.data.chats[m.chat].SetWelkam2 = false
-db.data.chats[m.chat].SetWelkam3 = true
-m.reply("*Succes Change Type 3*")
-} else if (q == "off") {
-db.data.chats[m.chat].SetWelkam1 = false
-db.data.chats[m.chat].SetWelkam2 = false
-db.data.chats[m.chat].SetWelkam3 = false
-m.reply("*Succes Change To Off*")
-} else {
-	    }
-break
-case prefix+'textleft2':
-if (!isCreator) return m.reply(mess.owner)
-if (!q) return m.reply('Mau Set Left Ke Gmna? Left Yg Tersedia : 1,2,3,off')
-if (q == "1") {
-db.data.chats[m.chat].SetLeft1 = true
-db.data.chats[m.chat].SetLeft2 = false
-db.data.chats[m.chat].SetLeft3 = false
-m.reply("*Succes Change Type 1*")
-} else if (q == "2") {
-db.data.chats[m.chat].SetLeft1 = false
-db.data.chats[m.chat].SetLeft2 = true
-db.data.chats[m.chat].SetLeft3 = false
-m.reply("*Succes Change Type 2*")
-} else if (q == "3") {
-db.data.chats[m.chat].SetLeft1 = false
-db.data.chats[m.chat].SetLeft2 = false
-db.data.chats[m.chat].SetLeft3 = true
-m.reply("*Succes Change Type 3*")
-} else if (q == "off") {
-db.data.chats[m.chat].SetLeft1 = false
-db.data.chats[m.chat].SetLeft2 = false
-db.data.chats[m.chat].SetLeft3 = false
-m.reply("*Succes Change To Off*")
-} else {
-		}
-break
 case prefix+'textleft':{
 if (!isCreator) return m.reply(mess.owner)
 if (!text) return reply(`Sorry, can't return without text, and this explanation and how to use :
 
 *1.* +tag : for mention new member on welcome message.
 *2.* +grup : for getting group name.
+*3.* +desc : for getting group desc.
 
 • *Example* : ${command} Hi +tag, left to +grup group, we hope you enjoyed with us.`)
 let setup = global.db.data.chats[m.chat]
 setup.text_left = text
 m.reply(bold(`Successfully set.`))
+if (q == "reset") {
+db.data.chats[from].text_left = ''
+}
 }
 break
 case prefix+'textwel':{
@@ -1848,11 +1788,15 @@ if (!text) return reply(`Sorry, can't return without text, and this explanation 
 
 *1.* +tag : for mention new member on welcome message.
 *2.* +grup : for getting group name.
+*3.* +desc : for getting group desc.
 
 • *Example* : ${command} Hi +tag, welcome to +grup group, we hope you enjoyed with us.`)
 let setup = global.db.data.chats[m.chat]
 setup.text_welcome = text
 m.reply(bold(`Successfully set.`))
+if (q == "reset") {
+db.data.chats[from].text_welcome = ''
+}
 }
 break
 case prefix+'setfakereply':
